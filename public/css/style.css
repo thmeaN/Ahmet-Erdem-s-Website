@@ -1,0 +1,473 @@
+﻿/* ==========================================================================
+   1. GENEL AYARLAR (Global Styles)
+   ========================================================================== */
+html,
+body,
+#anaSayfa {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Sayfanın en az ekran boyutu kadar olmasını sağlar */
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 900;
+  letter-spacing: -1px; /* Başlık karakterlerini biraz birbirine yaklaştırır */
+}
+
+/* ==========================================================================
+   2. YERLEŞİM (Layout) DÜZENİ SINIFLARI
+   ========================================================================== */
+
+/* Eskiden .disDiv / #hakkimda idi. Boydan boya yayılan bölümler alanı */
+.section-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Ekranı ikiye bölen kolonlar için. */
+.half-column {
+  flex: 1; /* Esnek kutu, kalan alanı eşit paylaşır */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* İçindekileri dikeyde ortalar */
+  justify-content: center; /* İçindekileri yatayda ortalar */
+  position: relative;
+  text-align: center;
+}
+
+/* ==========================================================================
+   3. ANA SAYFA - GİRİŞ BÖLÜMÜ (Hero Section)
+   ========================================================================== */
+
+/* SOL KOLON (Fotoğrafın olduğu alan, eskiden #div-1) */
+#hero-left-col {
+  background-color: #13b9b9;
+  padding-top: 72px; /* Üstten boşluk bırakır */
+  overflow: hidden; /* Dışarı taşan arka planı gizler */
+  color: whitesmoke;
+  text-shadow: 2px 2px #40605c; /* Yazılara gölge ekler */
+}
+
+/* Sol kolonun arka planındaki cam efekti ve filtreler */
+#hero-left-col::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    url("../Pictures/fotograf.jpg") center left / cover no-repeat,
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 200, 200, 0.6) 0%,
+      rgba(255, 180, 200, 0.45) 15%,
+      rgba(255, 160, 200, 0.3) 30%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 40% 70%,
+      rgba(200, 220, 255, 0.45) 0%,
+      rgba(180, 200, 255, 0.25) 20%,
+      transparent 50%
+    );
+  background-blend-mode: overlay, normal, normal;
+  filter: blur(20px) saturate(1.05); /* Fotoğrafı bulanıklaştırıp renk doygunluğunu artırır */
+  transform: scale(
+    1.05
+  ); /* Kenarlardaki bulanıklık taşmasını önlemek için biraz büyütür */
+  z-index: 0;
+  pointer-events: none; /* Tıklamaların alt katmana geçmesini engellemez */
+}
+
+/* Sol kolondaki içeriklerin arka planın üzerinde görünmesini sağlar */
+#hero-left-col > * {
+  position: relative;
+  z-index: 1;
+}
+
+#hero-left-col > h3 {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  margin: 0;
+  text-align: left;
+}
+
+#fotografim {
+  width: 60%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 17px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* SAĞ KOLON (Daktilo metni ve Sosyal Butonların olduğu alan, eskiden #div-2) */
+#hero-right-col {
+  background: linear-gradient(
+    45deg,
+    #a4f9ff,
+    #1552a8
+  ); /* Gradyan renk geçişi */
+  padding-top: 60px;
+  z-index: 500;
+  color: whitesmoke;
+  text-shadow: 2px 2px #40605c;
+}
+
+/* ==========================================================================
+   4. SOSYAL MEDYA BUTONLARI
+   ========================================================================== */
+
+.social-btn-base {
+  width: 100%;
+  height: 50px;
+  margin: 10px 0;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  overflow: hidden;
+  background: #1e3a8a; /* Varsayılan koyu mavi */
+  color: #000000;
+}
+
+.btn-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%); /* Tam dikey ortalama işlemi */
+  width: 24px;
+  height: 24px;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: color 0.3s;
+}
+
+#LinkedIn_buton .btn-icon {
+  color: #0077b5;
+}
+#GitHub_buton .btn-icon {
+  color: #333;
+}
+
+.social-btn-base::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: -10%; /* Tam kaplaması için biraz dışarıdan başlatılır */
+  width: 120%;
+  height: 100%;
+  background: #ffffff; /* Perdenin rengi beyaz */
+  transform: skew(30deg); /* Eğiklik katar */
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.3, 1, 0.8, 1); /* Hızlı başlayıp yavaşlayan animasyon */
+  z-index: 5;
+}
+
+.social-btn-base span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+}
+
+.social-btn-base:hover::before {
+  transform: translate3d(120%, 0, 0) skew(30deg); /* Perdeyi hızla sağa doğru kaydırıp kaldırır */
+}
+.social-btn-base:hover span {
+  color: #ffffff; /* Yazı beyaz olur */
+}
+.social-btn-base:hover .btn-icon {
+  color: #ffffff !important; /* İkonlar beyaz olur */
+}
+.social-btn-base:hover img.btn-icon {
+  filter: brightness(0) invert(1); /* Resim olan logo (Kaggle) tersine çevrilerek beyaz yapılır */
+}
+
+/* ==========================================================================
+   5. HAKKIMDA BÖLÜMÜ (About Section)
+   ========================================================================== */
+
+#about-glass-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(225deg, #a4f9ff, #1552a8);
+  padding: 20px;
+  position: relative;
+  width: 50%;
+  flex: 1; /* half column effect */
+}
+
+.glass-card-container {
+  background: rgba(255, 255, 255, 0.353); /* Yarı şeffaf beyaz */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); /* Hafif gölge */
+  backdrop-filter: blur(10px); /* Cam efekti - arkaplanı flulaştırır */
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 800px;
+  width: 100%;
+  padding: 50px;
+  color: #333;
+}
+
+.glass-card-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #0a2951;
+}
+
+.glass-card-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Yetenekler Bölümü (Skils) */
+.skills-container h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #051428;
+  border-bottom: 2px solid rgba(5, 20, 40, 0.1);
+  display: inline-block;
+}
+
+.tags {
+  margin: 2%;
+  display: flex;
+  flex-wrap: wrap; /* Etiketler sığmazsa alt satıra geçer */
+  gap: 10px;
+}
+
+.tag {
+  background: #051428;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition:
+    transform 0.3s ease,
+    background 0.3s;
+  cursor: default;
+}
+
+.tag:hover {
+  transform: translateY(-5px); /* Yukarı zıplama efekti */
+  background: #1e3a8a;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sağ kolon iletişim formu kartı */
+.contact-card {
+  width: 85%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.contact-card h2 {
+  color: #051428;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.contact-card p {
+  color: #4a5568;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+/* İletişim formu yazı kutuları */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #000;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #051428;
+  box-shadow: 0 0 15px rgba(5, 20, 40, 0.1);
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  border: none;
+  background: #051428;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: #1e3a8a;
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   7. SAĞ ALT SOSYAL LİNKLER UIVERSE KARTI
+   ========================================================================== */
+.main_card {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 1000;
+  width: 110px;
+  height: 110px;
+  background: lightgrey;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 1s ease-in-out;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #a4f9ff, #1552a8);
+}
+
+.cool_card_logo {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%);
+  transition: all 0.6s ease-in-out;
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+}
+
+.box {
+  position: absolute;
+  padding: 10px;
+  text-align: right;
+  background: rgba(255, 255, 255, 0.389);
+  border-top: 2px solid rgb(255, 255, 255);
+  border-right: 1px solid white;
+  border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
+  box-shadow: rgba(100, 100, 111, 0.364) -7px 7px 29px 0px;
+  transform-origin: bottom left;
+  transition: all 1s ease-in-out;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.box:hover .svg {
+  fill: white;
+}
+.box:hover .icon {
+  color: white;
+} /* bi icons hover color */
+.box:hover i::before {
+  color: white;
+}
+
+.box1 {
+  width: 95%;
+  height: 95%;
+  bottom: -95%;
+  left: -95%;
+}
+.box2 {
+  width: 72%;
+  height: 72%;
+  bottom: -72%;
+  left: -72%;
+  transition-delay: 0.2s;
+}
+.box3 {
+  width: 45%;
+  height: 45%;
+  bottom: -45%;
+  left: -45%;
+  transition-delay: 0.4s;
+}
+
+.main_card:hover {
+  transform: scale(1.1);
+}
+.main_card:hover .box {
+  bottom: -1px;
+  left: -1px;
+}
+.main_card:hover .cool_card_logo {
+  transform: translate(0, 0);
+  bottom: 20px;
+  right: 20px;
+}
+
+/* ==========================================================================
+   8. MOBİL UYUMLULUK (Responsive Design)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .section-wrapper,
+  #hakkimda {
+    flex-direction: column;
+  }
+  .half-column {
+    width: 100%;
+    min-height: auto;
+  }
+  .glass-card-container {
+    padding: 30px 20px;
+  }
+  .glass-card-content h2 {
+    font-size: 1.8rem;
+  }
+  #about-glass-wrapper {
+    width: 100%;
+  }
+}

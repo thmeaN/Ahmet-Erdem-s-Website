@@ -1,0 +1,112 @@
+/* ========================================================
+   SAYFA GENEL AYARLARI VE YUMUŞAK KAYDIRMA EFEKTİ
+   ======================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ========================================================
+   DAKTİLO (TYPEWRITER) EFEKTİ İMLEÇ STİLLERİ
+   ======================================================== */
+.cursor {
+  font-weight: 300;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ========================================================
+   YUKARI ÇIK (SCROLL TOP) BUTONU STİLLERİ
+   ======================================================== */
+#scrollTopBtn {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    visibility 0.4s,
+    width 0.3s,
+    height 0.3s,
+    border-radius 0.3s,
+    background-color 0.3s;
+}
+
+#scrollTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ========================================================
+   SAĞ ÜST ASANSÖRLÜ NAVİGASYON MENÜSÜ VE ANİMASYONLARI
+   ======================================================== */
+#elevator-nav {
+  position: fixed;
+  right: 12px;
+  top: 20px;
+  width: 120px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 30px 10px 30px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  align-items: flex-end;
+  padding-right: 8px;
+  padding-left: 0px;
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  width: 100%;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: right;
+  opacity: 0.6;
+  transition:
+    opacity 0.3s,
+    color 0.3s;
+}
+
+.nav-item:hover {
+  opacity: 1;
+  color: #a4f9ff;
+}
+
+.nav-item.active {
+  opacity: 1;
+  color: #a4f9ff;
+  text-shadow: 0 0 8px rgba(164, 249, 255, 0.6);
+}
+
+.elevator-track {
+  position: relative;
+  width: 20px;
+  min-width: 20px;
+}
+
+#elevator {
+  position: absolute;
+  left: 5px;
+  top: 0; /* JS ile dinamik ayarlanıyor */
+  transform: scale(0.7); /* İkonu biraz küçültelim ki dar alanda sırıtmasın */
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 5px rgba(164, 249, 255, 0.6));
+}

@@ -1,0 +1,312 @@
+<%- include('partials/head') %>
+
+    <!--? ÜST DİVLER -->
+    <div class="section-wrapper" id="anaSayfa">
+
+      <!--? ÜST SOL DİV -->
+
+      <div class="half-column" id="hero-left-col">
+        <h3 style="position: absolute; left: 8%; top: 10%; text-align: center;">
+          <b>Ahmet Erdem Öztürk | Bilgisayar Mühendisi</b>
+        </h3>
+        <img
+          id="fotografim"
+          src="Pictures/fotograf.jpg"
+          alt="Fotoğraf bulunamadı."
+        />
+      </div>
+
+        <!--? ÜST SAĞ DİV -->
+
+      <div class="half-column" id="hero-right-col">
+        <!-- Zaten var olan Ana Sayfa linki yerine, asansörlü yeni menümüzü koyuyoruz -->
+        <nav id="elevator-nav">
+          <div class="nav-links">
+            <a href="#anaSayfa" class="nav-item active">Ana Sayfa</a>
+            <a href="#hakkimda" class="nav-item">Hakkımda</a>
+            <a href="#sertifikalar" class="nav-item">Sertifikalar</a>
+            <a href="#projelerim" class="nav-item">Projelerim</a>
+          </div>
+          <div class="elevator-track">
+            <div id="elevator">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a4f9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16V8"></path>
+                <path d="M8 12l4-4 4 4"></path>
+              </svg>
+            </div>
+          </div>
+        </nav>
+        
+        <!--? From Uiverse.io by ElsayedShamsEldeen-->
+        <!--? HOVER LOGO -->
+
+        <div class="main_card">
+          <div class="background"></div>
+
+          <div class="cool_card_logo">
+            <img
+              src="Pictures/Logom Arka Plansız.png"
+              alt="Logo"
+              style="width: 85px"
+            />
+          </div>
+
+          <a
+            href="https://www.instagram.com/erdemooztrk/"
+            target="_blank"
+            class="box box1"
+          >
+            <span class="icon">
+              <img
+                style="width: 16px; margin-bottom: 24px; margin-left: 10px"
+                src="Pictures/instagram logo.png"
+                alt="Instagram"
+              />
+            </span>
+          </a>
+
+          <a
+            href="https://discord.com/channels/somnia_._"
+            target="_blank"
+            class="box box2"
+          >
+            <span class="icon">
+              <i class="bi bi-discord" style="color: #7289d9; text-shadow: none;"></i>
+            </span>
+          </a>
+
+          <a href="http://t.me/thmeaN" target="_blank" class="box box3">
+            <span class="icon">
+              <i class="bi bi-telegram" style="color: #24a1de; text-shadow: none;"></i>
+            </span>
+          </a>
+
+          
+        </div>
+
+        <!--? ÜST SAĞ DİV -->
+
+        <div id="Anadiv-2_icDivi">
+          <h1 style="display: grid; margin: 0 auto; justify-content: center; text-align: center;">
+            <b style="visibility: hidden; grid-area: 1 / 1;">Selam, Adım <br />Ahmet Erdem.<span style="opacity: 0;">|</span></b>
+            <b id="typewriter-text" style="grid-area: 1 / 1;"></b>
+          </h1>
+          <h5>
+            <b>Eskişehirliyim. <br />
+              Bilgisayar Mühendisiyim.</b>
+            <br /><br />
+          </h5>
+          <a href="https://www.linkedin.com/in/ahmet-erdem-%C3%B6zt%C3%BCrk-a17683248/" target="_blank" style="text-decoration: none;">
+            <button class="social-btn-base" id="LinkedIn_buton">
+              <i class="bi bi-linkedin btn-icon"></i>
+              <span>LinkedIn</span>
+            </button>
+          </a>
+          <a href="https://github.com/thmeaN" target="_blank" style="text-decoration: none;">
+            <button class="social-btn-base" id="GitHub_buton">
+              <i class="bi bi-github btn-icon"></i>
+              <span>GitHub</span>
+            </button>
+          </a>
+          <a href="https://www.kaggle.com/nsomnia" target="_blank" style="text-decoration: none;">
+            <button class="social-btn-base" id="Keggle_buton">
+              <img src="Pictures/kaggle logo.png" class="btn-icon" alt="Kaggle" />
+              <span>Kaggle</span>
+            </button>
+          </a>
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <!--? ALT DİV -->
+
+    <div id="hakkimda" class="section-wrapper">
+      <button class="scroll-top-btn" id="scrollTopBtn">
+        <svg class="scroll-top-icon" viewBox="0 0 384 512">
+          <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </button>
+
+      <!--? ALT SOL DİV -->
+
+         <div id="about-glass-wrapper">
+        <div class="glass-card-container">
+          <div class="glass-card-content">
+            <h3>Merhaba, Ben Ahmet Erdem 👋</h3>
+            <br />
+            <p>
+              Bilgisayar Mühendisliği bölümünde öğrenciyim ve kodlama dünyasında
+              kendi yolumu çizmeye çalışıyorum. Henüz yolun başında olsam da
+              öğrenme tutkum çok yüksek.
+            </p>
+
+            <p>
+              Derslerden arta kalan zamanımda
+              <strong>kendimi geliştirmek için</strong> sürekli yeni
+              teknolojileri kurcalıyor ve projeler üretiyorum. Amacım, her gün
+              bir önceki günden daha iyi kod yazabilmek.
+            </p>
+
+            <div class="skills-container">
+              <h3>Kullandığım Teknolojiler</h3>
+              <div class="tags">
+                <span class="tag">Java</span>
+
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Python</span>
+                <span class="tag">C</span>
+                <span class="tag">C#</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--? ALT SAĞ DİV -->
+
+      <div class="half-column" style="background: linear-gradient(135deg, #a4f9ff, #1552a8);">
+        <div class="contact-card">
+          <h2>Bana Ulaşın 📩</h2>
+          <p>Projeleriniz, iş teklifleri veya tanışmak için yazabilirsiniz.</p>
+          <form action="https://formspree.io/f/SENIN_FORM_ID" method="POST" class="contact-form">
+            <div class="form-group">
+              <label for="name">Adınız Soyadınız</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Örn: Ahmet Erdem"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">E-posta Adresiniz</label>
+              <input
+                type="email"
+                id="email"
+                name="_replyto"
+                placeholder="mail@ornek.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Mesajınız</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Mesajınızı buraya yazın..."
+                required
+                ></textarea>
+            </div>
+            <button type="submit" class="contact-btn">Gönder 🚀</button>
+          </form>
+        </div>
+      </div>
+    </div> <!-- hakkimda sonu -->
+
+    <!-- Boş Sertifikalar & Projelerim Bölümleri (Asansör için geçici/örnek alanlar) -->
+    <div id="sertifikalar" class="half-column" style="min-height: 100vh; background: #1552a8; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <h1>Sertifikalar 📜</h1>
+      <p>Buraya sertifikalarınız gelecek...</p>
+    </div>
+
+    <div id="projelerim" class="half-column" style="min-height: 100vh; background: #0a2d5e; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <h1>Projelerim 💻</h1>
+      <p>Buraya projeleriniz gelecek...</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      const text = "Selam, Adım <br />Ahmet Erdem.";
+      const target = document.getElementById("typewriter-text");
+      let index = 0;
+
+      function typeWriter() {
+        if (index < text.length) {
+          if (text.charAt(index) === '<') {
+            index = text.indexOf('>', index);
+          }
+          
+          target.innerHTML = text.substring(0, index + 1) + "<span class='cursor'>|</span>";
+          index++;
+          setTimeout(typeWriter, 100);
+        } else {
+          target.innerHTML = text + "<span class='cursor'>|</span>";
+        }
+      }
+      
+      // Sayfa yüklendiğinde daktilo efektini başlat
+      window.onload = () => {
+        setTimeout(typeWriter, 500);
+      };
+
+      // Yukarı Çıkar Butonu Scroll Efekti
+      const scrollBtn = document.getElementById("scrollTopBtn");
+      window.addEventListener("scroll", () => {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+          scrollBtn.classList.add("show");
+        } else {
+          scrollBtn.classList.remove("show");
+        }
+      });
+      
+      // Asansör ve Navigasyon Menüsü İşlemleri
+      const navLinksCont = document.querySelector('.nav-links');
+      const navItems = document.querySelectorAll('.nav-item');
+      const elevator = document.getElementById('elevator');
+      const sections = Array.from(navItems).map(item => document.querySelector(item.getAttribute('href')));
+
+      function updateElevator() {
+        if (!navLinksCont || !elevator) return;
+        
+        let current = 0;
+        for (let i = 0; i < sections.length; i++) {
+          if (sections[i]) {
+            const rect = sections[i].getBoundingClientRect();
+            // Sayfanın ortasını geçtiğinde aktif olsun
+            if (rect.top <= window.innerHeight / 2) {
+              current = i;
+            }
+          }
+        }
+        
+        navItems.forEach(item => item.classList.remove('active'));
+        if (navItems[current]) {
+          navItems[current].classList.add('active');
+          const itemRect = navItems[current].getBoundingClientRect();
+          const trackRect = document.querySelector('.elevator-track').getBoundingClientRect();
+          
+          // Hesaplanan pozisyonu asansör ikonuna aktar (Tam merkeze hizalama)
+          const itemMiddle = itemRect.top - trackRect.top + (itemRect.height / 2);
+          const elevatorHeight = 26; // Sabit ikon yüksekliği olarak alabiliriz
+          
+          elevator.style.transform = `translateY(${itemMiddle - (elevatorHeight / 2)}px) scale(0.85)`;
+        }
+      }
+
+      window.addEventListener('scroll', updateElevator);
+      window.addEventListener('resize', updateElevator);
+      setTimeout(updateElevator, 100);
+
+      // Tıklandığında en üste yumuşak kayma
+      scrollBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+      });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+  
+</body>
+</html>
