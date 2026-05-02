@@ -130,7 +130,8 @@
         <div class="contact-card">
           <h2>Bana Ulaşın 📩</h2>
           <p>Projeleriniz, iş teklifleri veya tanışmak için yazabilirsiniz.</p>
-          <form action="https://formspree.io/f/SENIN_FORM_ID" method="POST" class="contact-form">
+          <form id="contactForm" class="contact-form">
+            <div id="formMessage" style="display: none; padding: 15px; margin-bottom: 15px; border-radius: 5px; font-weight: 500;"></div>
             <div class="form-group">
               <label for="name">Adınız Soyadınız</label>
               <input
@@ -146,7 +147,7 @@
               <input
                 type="email"
                 id="email"
-                name="_replyto"
+                name="email"
                 placeholder="mail@ornek.com"
                 required
               />
@@ -161,7 +162,7 @@
                 required
                 ></textarea>
             </div>
-            <button type="submit" class="contact-btn">Gönder 🚀</button>
+            <button type="submit" class="contact-btn" id="submitBtn">Gönder 🚀</button>
           </form>
         </div>
       </div>
@@ -409,6 +410,74 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="semantic/dist/semantic.min.js"></script>
+    
+    <script>
+      // Form Submit Handler - DOMContentLoaded'de çalış
+      document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+          contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            formMessage.style.display = 'none';
+            
+            try {
+              const response = await fetch('/contact', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({ name, email, message })
+              });
+              
+              const data = await response.json();
+              
+              if (data.ok) {
+                formMessage.style.backgroundColor = '#d4edda';
+                formMessage.style.color = '#155724';
+                formMessage.style.border = '1px solid #c3e6cb';
+                formMessage.textContent = '✅ Mesajınız başarıyla gönderildi! Çok yakında size dönüş yapacağım.';
+                formMessage.style.display = 'block';
+                
+                document.getElementById('contactForm').reset();
+                submitBtn.textContent = 'Gönder 🚀';
+                submitBtn.disabled = false;
+                
+                setTimeout(() => {
+                  formMessage.style.display = 'none';
+                }, 5000);
+              } else {
+                formMessage.style.backgroundColor = '#f8d7da';
+                formMessage.style.color = '#721c24';
+                formMessage.style.border = '1px solid #f5c6cb';
+                formMessage.textContent = '❌ Hata: ' + (data.error || data.errors?.[0] || 'Bilinmeyen hata');
+                formMessage.style.display = 'block';
+                submitBtn.textContent = 'Gönder 🚀';
+                submitBtn.disabled = false;
+              }
+            } catch (error) {
+              formMessage.style.backgroundColor = '#f8d7da';
+              formMessage.style.color = '#721c24';
+              formMessage.style.border = '1px solid #f5c6cb';
+              formMessage.textContent = '❌ Ağ hatası. Lütfen tekrar deneyin.';
+              formMessage.style.display = 'block';
+              submitBtn.textContent = 'Gönder 🚀';
+              submitBtn.disabled = false;
+            }
+          });
+        }
+      });
+    </script>
   
 </body>
 </html>
