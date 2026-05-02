@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pageController = require("../temp_kontrol/pageController");
+const pageController = require("../controllers/pageController");
 
 router.get("/", pageController.getIndexPage);
 router.post("/contact", pageController.submitContactForm);
