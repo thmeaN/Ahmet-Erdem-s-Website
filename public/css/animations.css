@@ -22,9 +22,22 @@ html {
    YUKARI ÇIK (SCROLL TOP) BUTONU STİLLERİ
    ======================================================== */
 #scrollTopBtn {
+  position: fixed;
+  top: auto;
+  bottom: 130px;
+  right: 15px;
+  z-index: 1001;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(180deg, #a4f9ff, #1e3a8a);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
   transition:
     opacity 0.4s ease,
     transform 0.4s ease,
@@ -33,12 +46,24 @@ html {
     height 0.3s,
     border-radius 0.3s,
     background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#scrollTopBtn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 #scrollTopBtn.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+.scroll-top-icon {
+  width: 24px;
+  height: 24px;
+  fill: white;
 }
 
 /* ========================================================
@@ -48,14 +73,14 @@ html {
   position: fixed;
   right: 12px;
   top: 20px;
-  width: 120px;
+  width: 95px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
   z-index: 1050;
   background: rgba(0, 0, 0, 0.4);
-  padding: 30px 10px 30px 10px;
-  border-radius: 20px;
+  padding: 15px 6px 15px 6px;
+  border-radius: 15px;
   backdrop-filter: blur(5px);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
 }
@@ -63,11 +88,10 @@ html {
 .nav-links {
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  align-items: flex-end;
-  padding-right: 8px;
+  gap: 28px;
+  align-items: center;
+  padding-right: 0px;
   padding-left: 0px;
-  border-right: 2px solid rgba(255, 255, 255, 0.2);
   position: relative;
   width: 100%;
 }
@@ -76,8 +100,8 @@ html {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size: 11px;
-  text-align: right;
+  font-size: 13px;
+  text-align: center;
   opacity: 0.6;
   transition:
     opacity 0.3s,
@@ -97,8 +121,9 @@ html {
 
 .elevator-track {
   position: relative;
-  width: 20px;
-  min-width: 20px;
+  width: 0;
+  min-width: 0;
+  display: none;
 }
 
 #elevator {
