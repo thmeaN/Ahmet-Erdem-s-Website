@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const indexRoute = require("./routes/index");
 
@@ -14,6 +15,16 @@ app.use(express.static("public"));
 // Form ve JSON isteklerini okuyabilmek icin
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-secret-key-change-this",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }, // 24 saat
+  }),
+);
 
 // Rate Limiting - IP başına istek sınırlama
 const requestCounts = {};

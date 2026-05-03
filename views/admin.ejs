@@ -203,13 +203,48 @@
       <p>Gelen mesajları yönet ve yanıtla</p>
       <div class="stats">
         <div class="stat">
-          <div class="stat-number"><%= count %></div>
+          <div class="stat-number"><%= stats.totalMessages %></div>
           <div class="stat-label">Toplam Mesaj</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number"><%= stats.todayCount %></div>
+          <div class="stat-label">Bugün</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number"><%= stats.uniqueEmails %></div>
+          <div class="stat-label">Benzersiz E-posta</div>
         </div>
       </div>
     </div>
 
     <div class="content">
+      <!-- Arama Formu -->
+      <form method="GET" action="/admin" style="margin-bottom: 30px; display: flex; gap: 10px;">
+        <input type="text" name="search" placeholder="🔍 Adı, emaili veya mesajı ara..." value="<%= searchQuery %>" 
+          style="flex: 1; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+        <button type="submit" style="background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s;">
+          Ara
+        </button>
+        <% if (searchQuery) { %>
+          <a href="/admin" style="background: #999; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; display: flex; align-items: center; transition: 0.3s;">
+            Temizle
+          </a>
+        <% } %>
+      </form>
+
+      <!-- Arama Sonucu -->
+      <% if (searchQuery) { %>
+        <div style="background: #e8f5e9; border-left: 4px solid #40c057; padding: 12px 15px; margin-bottom: 20px; border-radius: 5px;">
+          🔍 "<%= searchQuery %>" için <strong><%= count %></strong> mesaj bulundu
+        </div>
+      <% } %>
+
+      <!-- Logout Butonu -->
+      <div style="text-align: right; margin-bottom: 20px;">
+        <a href="/logout" style="background: #ff6b6b; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; transition: 0.3s;">
+          🚪 Çıkış Yap
+        </a>
+      </div>
       <% if (messages.length === 0) { %>
         <div class="empty-state">
           <div class="empty-state-icon">📭</div>
@@ -235,7 +270,7 @@
               <div class="message-email">✉️ <%= msg.email %></div>
               <div class="message-text"><%= msg.message %></div>
               <div class="message-footer">
-                <a href="mailto:<%= msg.email %>?subject=Re: <%= msg.name %>" class="reply-btn">Cevapla</a>
+                <button class="reply-btn" onclick="openEmail('<%= msg.email %>', '<%= msg.name.replace(/'/g, "\\\\'") %>')">Cevapla</button>
                 <button class="delete-btn" onclick="deleteMessage('<%= msg.id %>')">Sil</button>
               </div>
             </div>
@@ -246,6 +281,11 @@
   </div>
 
   <script>
+    function openEmail(email, name) {
+      const subject = encodeURIComponent(`Re: ${name}`);
+      window.location.href = `mailto:${email}?subject=${subject}`;
+    }
+
     function deleteMessage(id) {
       if (confirm('Bu mesajı silmek istediğinize emin misiniz?')) {
         fetch(`/admin/messages/${id}`, {

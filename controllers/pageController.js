@@ -154,21 +154,88 @@ exports.submitContactForm = async (req, res) => {
   }
 };
 
-// Admin - Tüm mesajları göster
+// Login Sayfası
+exports.getLoginPage = (req, res) => {
+  res.render("login", { error: req.query.error || "" });
+};
+
+// Login İşlemi
+exports.submitLogin = (req, res) => {
+  const password = String(req.body.password || "").trim();
+  const correctPassword = process.env.ADMIN_PASSWORD || "admin123";
+
+  if (password === correctPassword) {
+    req.session.isAdmin = true;
+    return res.redirect("/admin");
+  }
+
+  res.redirect("/login?error=Yanlis%20sifre");
+};
+
+// Logout
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
+    res.redirect("/");
+  });
+};
+
+// Admin - Tüm mesajları göster (Arama ve İstatistikler ile)
 exports.getAdminMessages = async (req, res) => {
   try {
     const data = await fs.readFile(CONTACTS_PATH, "utf8");
-    const messages = data
+    const allMessages = data
       .trim()
       .split("\n")
       .filter((line) => line.trim())
       .map((line) => JSON.parse(line))
       .reverse();
 
-    res.render("admin", { messages, count: messages.length });
+    // Arama fonksiyonu
+    const searchQuery = String(req.query.search || "")
+      .toLowerCase()
+      .trim();
+    let filteredMessages = allMessages;
+
+    if (searchQuery) {
+      filteredMessages = allMessages.filter(
+        (msg) =>
+          msg.name.toLowerCase().includes(searchQuery) ||
+          msg.email.toLowerCase().includes(searchQuery) ||
+          msg.message.toLowerCase().includes(searchQuery),
+      );
+    }
+
+    // İstatistikler
+    const stats = {
+      totalMessages: allMessages.length,
+      filteredCount: filteredMessages.length,
+      todayCount: allMessages.filter((msg) => {
+        const today = new Date().toDateString();
+        const msgDate = new Date(msg.createdAt).toDateString();
+        return today === msgDate;
+      }).length,
+      uniqueEmails: new Set(allMessages.map((m) => m.email)).size,
+    };
+
+    res.render("admin", {
+      messages: filteredMessages,
+      count: filteredMessages.length,
+      searchQuery,
+      stats,
+    });
   } catch (error) {
     if (error.code === "ENOENT") {
-      return res.render("admin", { messages: [], count: 0 });
+      return res.render("admin", {
+        messages: [],
+        count: 0,
+        searchQuery: "",
+        stats: {
+          totalMessages: 0,
+          filteredCount: 0,
+          todayCount: 0,
+          uniqueEmails: 0,
+        },
+      });
     }
     res.status(500).send("Sunucu hatasi");
   }
