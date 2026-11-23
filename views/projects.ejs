@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-projects">
+  <%- include('partials/navbar') %>
+
+  <main class="page-main-container">
+    <div class="page-header-box">
+      <div class="breadcrumb-chip">💻 Yazılım & AR-GE</div>
+      <h1 class="page-title">Projelerim</h1>
+      <p class="page-subtitle">Otonom sistemler, mobil ve masaüstü yazılımlar ve modern web platformları.</p>
+    </div>
+
+    <% if (!projects || projects.length === 0) { %>
+      <div class="glass-panel" style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 3rem; margin-bottom: 15px;">📁</div>
+        <h3>Henüz Proje Eklenmedi</h3>
+        <p style="opacity: 0.8;">Admin panelinden yeni projeler eklendiğinde burada sergilenecektir.</p>
+      </div>
+    <% } else { %>
+      <div class="projects-detail-grid">
+        <% projects.forEach(project => { %>
+          <div class="project-showcase-card glass-panel" id="<%= project.id %>">
+            <div class="project-card-top">
+              <div class="badge-cluster">
+                <% if (project.featuredBadge) { %>
+                  <span class="badge-featured"><%= project.featuredBadge %></span>
+                <% } %>
+                <% (project.tags || []).forEach(tag => { %>
+                  <span class="badge-tag"><%= tag %></span>
+                <% }); %>
+              </div>
+              <h2 class="project-name"><%= project.name %></h2>
+              <% if (project.tagline) { %>
+                <p class="project-tagline"><%= project.tagline %></p>
+              <% } %>
+            </div>
+
+            <div class="project-card-content">
+              <% if (project.problemSolution) { %>
+                <div class="project-summary-block">
+                  <h4>💡 Problem & Çözüm</h4>
+                  <p><%= project.problemSolution %></p>
+                </div>
+              <% } %>
+
+              <% if (project.role || project.roleDescription) { %>
+                <div class="project-role-block">
+                  <h4>👤 Rolüm: <%= project.role || 'Geliştirici' %></h4>
+                  <% if (project.roleDescription) { %>
+                    <p><%= project.roleDescription %></p>
+                  <% } %>
+                </div>
+              <% } %>
+
+              <% if (project.techStack && project.techStack.length > 0) { %>
+                <div class="project-tech-stack">
+                  <h4>Teknoloji Yığını:</h4>
+                  <div class="tags-row">
+                    <% project.techStack.forEach(tech => { %>
+                      <span class="tag"><%= tech %></span>
+                    <% }); %>
+                  </div>
+                </div>
+              <% } %>
+
+              <% if (project.githubUrl || project.liveUrl) { %>
+                <div class="project-actions-row" style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+                  <% if (project.githubUrl) { %>
+                    <a href="<%= project.githubUrl %>" target="_blank" class="btn-secondary-glass btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+                      <i class="bi bi-github"></i> Kaynak Kodu
+                    </a>
+                  <% } %>
+                  <% if (project.liveUrl) { %>
+                    <a href="<%= project.liveUrl %>" target="_blank" class="btn-primary-glow btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+                      <i class="bi bi-box-arrow-up-right"></i> Canlı İncele
+                    </a>
+                  <% } %>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

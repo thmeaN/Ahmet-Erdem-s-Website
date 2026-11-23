@@ -1,9 +1,18 @@
 const path = require("path");
 const fs = require("fs/promises");
-const { randomUUID } = require("crypto");
+const { randomUUID, timingSafeEqual } = require("crypto");
 const nodemailer = require("nodemailer");
 
 const CONTACTS_PATH = path.join(__dirname, "..", "data", "contacts.jsonl");
+
+const escapeHtml = (str) => {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
 
 let cachedTransport = null;
 
@@ -80,6 +89,11 @@ exports.submitContactForm = async (req, res) => {
     const toAddress = process.env.MAIL_TO || process.env.SMTP_USER;
     const fromAddress = process.env.MAIL_FROM || process.env.SMTP_USER;
 
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+    const encodedSubject = encodeURIComponent(`Re: ${name}`);
+
     const htmlTemplate = `
       <!DOCTYPE html>
       <html lang="tr">
@@ -110,23 +124,22 @@ exports.submitContactForm = async (req, res) => {
           <div class="content">
             <div class="info-box">
               <div class="label">👤 Gönderici Adı:</div>
-              <div class="value">${name}</div>
+              <div class="value">${safeName}</div>
             </div>
             <div class="info-box">
               <div class="label">✉️ Gönderici E-posta:</div>
-              <div class="value"><a href="mailto:${email}" style="color: #667eea; text-decoration: none;">${email}</a></div>
+              <div class="value"><a href="mailto:${safeEmail}" style="color: #667eea; text-decoration: none;">${safeEmail}</a></div>
             </div>
             <div class="message-box">
               <h3>📝 Mesaj:</h3>
-              ${message.replace(/\n/g, "<br>")}
+              ${safeMessage}
             </div>
             <div style="text-align: center; margin-top: 30px;">
-              <a href="mailto:${email}?subject=Re: ${name}" class="button">Cevapla</a>
+              <a href="mailto:${safeEmail}?subject=${encodedSubject}" class="button">Cevapla</a>
             </div>
           </div>
           <div class="footer">
             <p>Bu mesaj Ahmet Erdem Öztürk'ün kişisel web sitesinden gönderilmiştir.</p>
-            <p><a href="http://localhost:3000" style="color: #667eea; text-decoration: none;">Admin Paneline Erişim</a> (Sadece Admin)</p>
           </div>
         </div>
       </body>
@@ -164,7 +177,19 @@ exports.submitLogin = (req, res) => {
   const password = String(req.body.password || "").trim();
   const correctPassword = process.env.ADMIN_PASSWORD || "admin123";
 
-  if (password === correctPassword) {
+  if (!process.env.ADMIN_PASSWORD) {
+    console.warn(
+      "GÜVENLİK UYARISI: ADMIN_PASSWORD ortam değişkeni ayarlanmamış, varsayılan şifre devrede!",
+    );
+  }
+
+  const passwordBuffer = Buffer.from(password);
+  const expectedBuffer = Buffer.from(correctPassword);
+  const isMatch =
+    passwordBuffer.length === expectedBuffer.length &&
+    timingSafeEqual(passwordBuffer, expectedBuffer);
+
+  if (isMatch) {
     req.session.isAdmin = true;
     return res.redirect("/admin");
   }
@@ -182,13 +207,36 @@ exports.logout = (req, res) => {
 // Admin - Tüm mesajları göster (Arama ve İstatistikler ile)
 exports.getAdminMessages = async (req, res) => {
   try {
-    const data = await fs.readFile(CONTACTS_PATH, "utf8");
-    const allMessages = data
-      .trim()
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line))
-      .reverse();
+    let data = "";
+    try {
+      data = await fs.readFile(CONTACTS_PATH, "utf8");
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        return res.render("admin", {
+          messages: [],
+          count: 0,
+          searchQuery: "",
+          stats: {
+            totalMessages: 0,
+            filteredCount: 0,
+            todayCount: 0,
+            uniqueEmails: 0,
+          },
+        });
+      }
+      throw err;
+    }
+
+    const allMessages = [];
+    for (const line of data.trim().split("\n")) {
+      if (!line.trim()) continue;
+      try {
+        allMessages.push(JSON.parse(line));
+      } catch (e) {
+        console.error("Bozuk mesaj kaydı atlandı:", line);
+      }
+    }
+    allMessages.reverse();
 
     // Arama fonksiyonu
     const searchQuery = String(req.query.search || "")
@@ -199,9 +247,9 @@ exports.getAdminMessages = async (req, res) => {
     if (searchQuery) {
       filteredMessages = allMessages.filter(
         (msg) =>
-          msg.name.toLowerCase().includes(searchQuery) ||
-          msg.email.toLowerCase().includes(searchQuery) ||
-          msg.message.toLowerCase().includes(searchQuery),
+          (msg.name && msg.name.toLowerCase().includes(searchQuery)) ||
+          (msg.email && msg.email.toLowerCase().includes(searchQuery)) ||
+          (msg.message && msg.message.toLowerCase().includes(searchQuery)),
       );
     }
 
@@ -214,7 +262,8 @@ exports.getAdminMessages = async (req, res) => {
         const msgDate = new Date(msg.createdAt).toDateString();
         return today === msgDate;
       }).length,
-      uniqueEmails: new Set(allMessages.map((m) => m.email)).size,
+      uniqueEmails: new Set(allMessages.map((m) => m.email).filter(Boolean))
+        .size,
     };
 
     res.render("admin", {
@@ -224,19 +273,7 @@ exports.getAdminMessages = async (req, res) => {
       stats,
     });
   } catch (error) {
-    if (error.code === "ENOENT") {
-      return res.render("admin", {
-        messages: [],
-        count: 0,
-        searchQuery: "",
-        stats: {
-          totalMessages: 0,
-          filteredCount: 0,
-          todayCount: 0,
-          uniqueEmails: 0,
-        },
-      });
-    }
+    console.error("Admin mesajları getirme hatası:", error);
     res.status(500).send("Sunucu hatasi");
   }
 };
@@ -245,22 +282,38 @@ exports.getAdminMessages = async (req, res) => {
 exports.deleteMessage = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await fs.readFile(CONTACTS_PATH, "utf8");
-    const messages = data
-      .trim()
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line))
-      .filter((msg) => msg.id !== id);
+    let data = "";
+    try {
+      data = await fs.readFile(CONTACTS_PATH, "utf8");
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        return res.status(404).json({ ok: false, error: "Mesaj bulunamadı" });
+      }
+      throw err;
+    }
+
+    const messages = [];
+    for (const line of data.trim().split("\n")) {
+      if (!line.trim()) continue;
+      try {
+        const parsed = JSON.parse(line);
+        if (parsed.id !== id) {
+          messages.push(parsed);
+        }
+      } catch (e) {}
+    }
 
     await fs.writeFile(
       CONTACTS_PATH,
-      messages.map((m) => JSON.stringify(m)).join("\n") + "\n",
+      messages.length > 0
+        ? messages.map((m) => JSON.stringify(m)).join("\n") + "\n"
+        : "",
       "utf8",
     );
 
     res.status(200).json({ ok: true, message: "Mesaj silindi" });
   } catch (error) {
+    console.error("Mesaj silme hatası:", error);
     res.status(500).json({ ok: false, error: "Sunucu hatasi" });
   }
 };

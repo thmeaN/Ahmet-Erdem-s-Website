@@ -1,0 +1,205 @@
+{
+  "profile": {
+    "name": "Ahmet Erdem Öztürk",
+    "statusBadge": "Bilgisayar Mühendisliği",
+    "location": "Eskişehir",
+    "tagline": "AI & Yazılım",
+    "avatar": "/Pictures/fotograf.jpg",
+    "heroGreeting": "👋 Portfolyoma Hoş Geldin",
+    "typewriterText": "Selam, Adım <br />Ahmet Erdem.",
+    "bioLead": "Yapay zeka, otonom sistemler ve modern yazılım mimarileri geliştiren <b>Bilgisayar Mühendisliği öğrencisi</b> & <b>A.T.A.K. Kurucu Başkanı</b>.",
+    "socials": {
+      "linkedin": "https://www.linkedin.com/in/ahmet-erdem-%C3%B6zt%C3%BCrk-a17683248/",
+      "github": "https://github.com/thmeaN",
+      "kaggle": "https://www.kaggle.com/nsomnia",
+      "instagram": "https://www.instagram.com/thmean",
+      "discord": "https://discord.com/users/somnia_._",
+      "telegram": "https://t.me/thmeaN"
+    },
+    "highlights": [
+      {
+        "icon": "💡",
+        "title": "Teknik Birikim & Hakkımda",
+        "description": "Yapay zeka, NLP, Python, Java, Flutter ve modern web mimarileri üzerine yetkinliklerimi ve vizyonumu keşfedin.",
+        "linkUrl": "/hakkimda",
+        "linkText": "Profili Gör",
+        "badge": ""
+      },
+      {
+        "icon": "🚀",
+        "title": "A.T.A.K. Kulübü Başkanlığı",
+        "description": "100+ üyeli Akılcı Teknoloji ve Araştırma Kulübü ile TEKNOFEST ve AR-GE projeleri koordinasyon çalışmaları.",
+        "linkUrl": "/liderlik",
+        "linkText": "Liderlik Detayları",
+        "badge": "Topluluk"
+      },
+      {
+        "icon": "💻",
+        "title": "Öne Çıkan Projelerim",
+        "description": "Snapframe (TEKNOFEST Türkçe AI Asistanı), Motionbridge (Touchpad kontrolü) ve diğer yazılım çalışmaları.",
+        "linkUrl": "/projelerim",
+        "linkText": "Projeleri İncele",
+        "badge": ""
+      }
+    ]
+  },
+  "about": {
+    "title": "Hakkımda & Yetkinliklerim",
+    "subtitle": "Öğrenme tutkusu, mühendislik disiplini ve sürekli gelişim vizyonu.",
+    "breadcrumb": "👤 Kendim Hakkında",
+    "bioTitle": "Merhaba, Ben Ahmet Erdem 👋",
+    "bioParagraphs": [
+      "Eskişehir'de yaşayan bir <b>Bilgisayar Mühendisliği öğrencisiyim</b>. Yazılım dünyasında yalnızca kod yazmayı değil; gerçek hayattaki problemleri otonom, akılcı ve sürdürülebilir mimarilerle çözmeyi hedefliyorum.",
+      "Üniversite eğitimim süresince teorik algoritmik temelleri sahaya taşımak adına <b>Yapay Zeka (AI)</b>, <b>Büyük Dil Modelleri (LLM & Fine-Tuning)</b>, <b>Doğal Dil İşleme (NLP)</b> ve <b>çapraz platform (Flutter / Java)</b> geliştirme alanlarında aktif olarak projeler üretiyorum.",
+      "Aynı zamanda <b>A.T.A.K. (Akılcı Teknoloji ve Araştırma Kulübü)</b> Kurucu Başkanı olarak, onlarca ekip arkadaşımla birlikte başta TEKNOFEST olmak üzere teknoloji yarışmalarına takımlar hazırlıyor, proje yönetimini ve teknik AR-GE süreçlerini koordine ediyorum."
+    ],
+    "focusPoints": [
+      {
+        "icon": "🎯",
+        "title": "Hedefim:",
+        "description": "Yapay zeka tabanlı otonom sistemler ve kullanıcı dostu modern yazılımlar geliştiren öncü bir mühendis olmak."
+      },
+      {
+        "icon": "🤝",
+        "title": "Çalışma Biçimim:",
+        "description": "Çevik (Agile) yönetim, açık iletişim, temiz kod (Clean Code) ve ekip içi bilgi paylaşımı."
+      }
+    ],
+    "skillCategories": [
+      {
+        "title": "🤖 Yapay Zeka & Veri",
+        "isAccent": true,
+        "tags": ["Python", "LLM & Fine Tuning", "NLP", "Görüntü İşleme", "Machine Learning"]
+      },
+      {
+        "title": "📱 Mobil & Masaüstü Yazılım",
+        "isAccent": false,
+        "tags": ["Java", "Flutter", "Dart", "C / C++"]
+      },
+      {
+        "title": "🌐 Web & Veritabanı & Altyapı",
+        "isAccent": false,
+        "tags": ["Node.js", "Express", "SQL", "HTML5 & CSS3", "Git & GitHub", "Notion"]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "proj-snapframe-2024",
+      "name": "Snapframe",
+      "tagline": "Türkçe Doğal Dil Komutlarıyla Bilgisayar Kontrolü Sağlayan Otonom Asistan",
+      "featuredBadge": "🏆 TEKNOFEST 2024",
+      "tags": ["Yapay Zeka", "NLP & LLM"],
+      "problemSolution": "TEKNOFEST yarışması için geliştirilen bu projede; Türkçe doğal dil komutlarını yapılandırılmış JSON aksiyonlarına çevirerek bilgisayarı insan gibi kullanan otonom bir sistem geliştirdik. Temel amacımız, özellikle engelli bireylerin bilgisayar kullanımını kolaylaştırmak ve erişilebilirliği en üst düzeye çıkarmaktı.",
+      "role": "Proje Kaptanı & Yazılım Geliştirici",
+      "roleDescription": "Takım koordinasyonunu sağladım; projenin beyni olan yapay zeka asistanının mimarisini, doğal dil işleme katmanını ve kullanıcı arayüzünü geliştirdim.",
+      "techStack": ["Python", "Fine Tuning", "Görüntü İşleme", "SQL", "Git", "Notion"],
+      "githubUrl": "",
+      "liveUrl": "",
+      "imageUrl": ""
+    },
+    {
+      "id": "proj-motionbridge-2024",
+      "name": "Motionbridge",
+      "tagline": "Telefonu Hassas Touchpad ve Hareket Denetleyicisine Dönüştüren Çapraz Platform Uygulaması",
+      "featuredBadge": "📱 Mobil & Desktop",
+      "tags": ["Flutter & Java", "Socket"],
+      "problemSolution": "Telefonun hareket ve dokunmatik sensörlerini kullanarak bilgisayarı touchpad mantığıyla akıcı, düşük gecikmeli ve ergonomik şekilde uzaktan kontrol edebileceğimiz bir uygulama mimarisi kurduk.",
+      "role": "Yazılım Geliştirici",
+      "roleDescription": "Projenin Windows masaüstü servis tarafındaki geliştirme sorumluluklarını üstlendim; mobil taraftaki hareket algılama motoru ve komut aktarım protokollerini geliştirdim.",
+      "techStack": ["Java", "Flutter", "Dart", "Network Sockets", "Git"],
+      "githubUrl": "",
+      "liveUrl": "",
+      "imageUrl": ""
+    },
+    {
+      "id": "proj-portfolio-2024",
+      "name": "Kişisel Portfolyo Platformu",
+      "tagline": "Modern Çok Sayfalı Mimari, Güvenli İletişim Servisi ve Özel Admin Paneli",
+      "featuredBadge": "🌐 Web Platformu",
+      "tags": ["Full Stack", "Node.js"],
+      "problemSolution": "Projelerimi, liderlik çalışmalarımı ve teknik birikimimi kurumsal standartlarda sunan; SMTP e-posta bildirim sistemi, rate-limiting, XSS koruması ve oturum yönetimi barındıran modern bir platform inşa ettim.",
+      "role": "Full Stack Geliştirici",
+      "roleDescription": "Frontend kullanıcı deneyimini, Express 5 MVC mimarisini, şablon motorunu ve sunucu tarafı güvenlik mekanizmalarını uçtan uca tasarlayıp kodladım.",
+      "techStack": ["Node.js", "Express", "EJS", "CSS3 Glassmorphism", "Nodemailer", "Git"],
+      "githubUrl": "https://github.com/thmeaN",
+      "liveUrl": "",
+      "imageUrl": ""
+    }
+  ],
+  "certificates": [
+    {
+      "id": "cert-cybersecurity-ibm",
+      "title": "Cybersecurity Fundamentals",
+      "issuer": "IBM SkillsBuild",
+      "description": "Siber güvenlik prensipleri, ağ güvenliği tehditleri, şifreleme yöntemleri, güvenlik duvarları ve modern siber savunma stratejileri üzerine temel ve ileri düzey yetkinlik eğitimi.",
+      "imageUrl": "/Pictures/sertifika1.jpg",
+      "verifyUrl": "https://www.credly.com/badges/bed2c169-5063-420c-ac58-204945dc9710/public_url"
+    },
+    {
+      "id": "cert-digital-world-ibm",
+      "title": "Working in a Digital World: Professional Skills",
+      "issuer": "IBM SkillsBuild",
+      "description": "Dijital dönüşüm çağında etkili problem çözme, çevik takım çalışması, profesyonel iletişim, veri güvenliği farkındalığı ve kritik düşünme yetkinliklerini kapsayan sertifikasyon.",
+      "imageUrl": "/Pictures/sertifika2.jpg",
+      "verifyUrl": "https://www.credly.com/badges/03ad843f-1714-48ef-8ec2-b2fd1f516c06/public_url"
+    },
+    {
+      "id": "cert-emerging-tech-ibm",
+      "title": "Explore Emerging Tech",
+      "issuer": "IBM SkillsBuild",
+      "description": "Yapay zeka (AI), bulut bilişim (Cloud Computing), blokzincir ve nesnelerin interneti (IoT) gibi yükselen teknolojilerin mimarisi ve iş dünyasındaki pratik kullanım senaryoları.",
+      "imageUrl": "/Pictures/sertifika3.jpg",
+      "verifyUrl": "https://www.credly.com/badges/49b500e7-6953-4796-9da1-30efd4553194/public_url"
+    }
+  ],
+  "leadership": {
+    "clubName": "A.T.A.K.",
+    "roleTitle": "Akılcı Teknoloji ve Araştırma Kulübü Kurucu Başkanı",
+    "subtitle": "A.T.A.K. (Akılcı Teknoloji ve Araştırma Kulübü) vizyonu ve topluluk liderliği.",
+    "instagramUrl": "https://www.instagram.com/atak.bseu/",
+    "linkedinUrl": "https://www.linkedin.com/company/ak%C4%B1lc%C4%B1-teknoloji-ve-ara%C5%9Ft%C4%B1rma-kul%C3%BCb%C3%BC/",
+    "descriptionParagraphs": [
+      "Danışmanlığını <b>Prof. Dr. Cihan Karakuzu</b> hocamızın üstlendiği Akılcı Teknoloji ve Araştırma Kulübü'nün kurucu başkanı olarak; öğrenci arkadaşlarımızın teknolojiye olan ilgilerini somut projelere dönüştürmelerine liderlik ediyorum.",
+      "Problemleri 'akılcı' teknolojilerle çözen ve disiplinler arası ekip çalışmasına inanan yüzlerce üyemizle birlikte çıktığımız bu yolda temel odak noktalarımız:"
+    ],
+    "stats": [
+      {
+        "id": "stat-1",
+        "icon": "👥",
+        "number": "100+",
+        "title": "Aktif Topluluk Üyesi",
+        "description": "Yazılım, mühendislik ve inovasyon odaklı geniş öğrenci ağı.",
+        "isHighlighted": false
+      },
+      {
+        "id": "stat-2",
+        "icon": "🚀",
+        "number": "TEKNOFEST",
+        "title": "Proje & Takım Koordinasyonu",
+        "description": "Teknoloji yarışmalarına vizyoner ekipler kurma ve süreç yönetimi.",
+        "isHighlighted": true
+      },
+      {
+        "id": "stat-3",
+        "icon": "🧠",
+        "number": "AI & ML",
+        "title": "AR-GE ve Çalışma Grupları",
+        "description": "Yapay zeka ve güncel teknolojiler üzerine atölye ve birlikte öğrenme kültürü.",
+        "isHighlighted": false
+      }
+    ],
+    "pillars": [
+      {
+        "id": "pillar-1",
+        "title": "🚀 Proje ve Takım Yönetimi",
+        "description": "Başta TEKNOFEST olmak üzere çeşitli teknoloji yarışmaları için vizyoner proje ekipleri kurmak, görev dağılımlarını koordine etmek ve yarışma süreçlerini başarıyla tamamlamak."
+      },
+      {
+        "id": "pillar-2",
+        "title": "⚙️ Teknik Gelişim & Mentorluk",
+        "description": "Yapay Zeka (AI), makine öğrenmesi ve güncel yazılım teknolojileri üzerine çalışma grupları ve etkinlikler düzenleyerek birlikte öğrenme ve üretme ortamı sağlamak."
+      }
+    ]
+  }
+}

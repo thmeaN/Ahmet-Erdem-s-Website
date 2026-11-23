@@ -1,0 +1,22 @@
+<nav class="top-static-navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-brand">
+      <img src="/Pictures/Logom%20Arka%20Plans%C4%B1z.png" alt="Erdem" />
+      <span>Erdem</span>
+    </a>
+    <div class="nav-right-group">
+      <div class="nav-links-list">
+        <a href="/" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'home' ? 'active' : '' %>">Giriş</a>
+        <a href="/hakkimda" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'about' ? 'active' : '' %>">Hakkımda</a>
+        <a href="/sertifikalar" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'certificates' ? 'active' : '' %>">Sertifikalar</a>
+        <a href="/liderlik" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'leadership' ? 'active' : '' %>">Liderlik</a>
+        <a href="/projelerim" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'projects' ? 'active' : '' %>">Projelerim</a>
+        <a href="/iletisim" class="nav-link-item <%= typeof activePage !== 'undefined' && activePage === 'contact' ? 'active' : '' %>">İletişim</a>
+      </div>
+      <button id="themeToggleBtn" class="theme-toggle-btn" type="button" aria-label="Koyu / Açık Temayı Değiştir" title="Temayı Değiştir">
+        <i class="bi bi-moon-stars-fill theme-icon-moon"></i>
+        <i class="bi bi-sun-fill theme-icon-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>

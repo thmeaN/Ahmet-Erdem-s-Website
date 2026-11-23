@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-about">
+  <%- include('partials/navbar') %>
+
+  <main class="page-main-container">
+    <div class="page-header-box">
+      <div class="breadcrumb-chip"><%= about.breadcrumb || '👤 Kendim Hakkında' %></div>
+      <h1 class="page-title"><%= about.title %></h1>
+      <p class="page-subtitle"><%= about.subtitle %></p>
+    </div>
+
+    <div class="about-grid-layout">
+      <!-- Sol: Biyografi & Yaklaşım -->
+      <div class="about-card-primary glass-panel">
+        <h2><%= about.bioTitle || 'Merhaba 👋' %></h2>
+        <div class="about-text-content">
+          <% (about.bioParagraphs || []).forEach(p => { %>
+            <p><%- p %></p>
+          <% }); %>
+        </div>
+
+        <% if (about.focusPoints && about.focusPoints.length > 0) { %>
+          <div class="about-focus-points">
+            <% about.focusPoints.forEach(fp => { %>
+              <div class="focus-item">
+                <span class="focus-icon"><%= fp.icon || '🎯' %></span>
+                <div>
+                  <strong><%= fp.title %></strong>
+                  <p><%= fp.description %></p>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- Sağ: Yetenekler & Teknoloji Yığını -->
+      <div class="about-card-secondary glass-panel">
+        <h2>Teknoloji Yığınım</h2>
+        <p class="skills-intro">Projelerimde aktif olarak kullandığım diller, araçlar ve uzmanlık alanlarım:</p>
+
+        <% (about.skillCategories || []).forEach(cat => { %>
+          <div class="skill-category-group">
+            <h4><%= cat.title %></h4>
+            <div class="tags-row">
+              <% (cat.tags || []).forEach(tag => { %>
+                <span class="tag <%= cat.isAccent ? 'tag-accent' : '' %>"><%= tag %></span>
+              <% }); %>
+            </div>
+          </div>
+        <% }); %>
+
+        <div class="about-cta-box">
+          <p><%= about.ctaText || 'Projelerim hakkında daha fazla bilgi almak veya birlikte çalışmak için:' %></p>
+          <a href="/iletisim" class="btn-primary-glow btn-sm">İletişime Geçin →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

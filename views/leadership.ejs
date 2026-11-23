@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-leadership">
+  <%- include('partials/navbar') %>
+
+  <main class="page-main-container">
+    <div class="page-header-box">
+      <div class="breadcrumb-chip">🎓 Topluluk & Yönetim</div>
+      <h1 class="page-title"><%= leadership.roleTitle %></h1>
+      <p class="page-subtitle"><%= leadership.subtitle %></p>
+    </div>
+
+    <div class="leadership-hero-card glass-panel">
+      <div class="leadership-header-row">
+        <div class="leadership-title-block">
+          <h2><%= leadership.clubName %></h2>
+          <h3><%= leadership.roleTitle %></h3>
+        </div>
+        <div class="club-social-buttons">
+          <% if (leadership.instagramUrl) { %>
+            <a href="<%= leadership.instagramUrl %>" target="_blank" class="social-icon-circle" title="Instagram">
+              <i class="bi bi-instagram"></i>
+            </a>
+          <% } %>
+          <% if (leadership.linkedinUrl) { %>
+            <a href="<%= leadership.linkedinUrl %>" target="_blank" class="social-icon-circle" title="LinkedIn">
+              <i class="bi bi-linkedin"></i>
+            </a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="leadership-description">
+        <% (leadership.descriptionParagraphs || []).forEach(p => { %>
+          <p><%- p %></p>
+        <% }); %>
+      </div>
+
+      <!-- İstatistik Rozetleri -->
+      <% if (leadership.stats && leadership.stats.length > 0) { %>
+        <div class="leadership-stats-grid">
+          <% leadership.stats.forEach(stat => { %>
+            <div class="stat-big-box <%= stat.isHighlighted ? 'highlight-stat' : '' %>">
+              <div class="stat-big-icon"><%= stat.icon || '📌' %></div>
+              <div class="stat-big-number"><%= stat.number %></div>
+              <div class="stat-big-title"><%= stat.title %></div>
+              <p><%= stat.description %></p>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+
+      <!-- Temel Sütunlar -->
+      <% if (leadership.pillars && leadership.pillars.length > 0) { %>
+        <div class="leadership-pillars-grid">
+          <% leadership.pillars.forEach(pillar => { %>
+            <div class="pillar-card">
+              <h4><%= pillar.title %></h4>
+              <p><%= pillar.description %></p>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

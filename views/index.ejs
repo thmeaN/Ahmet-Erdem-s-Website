@@ -1,483 +1,132 @@
-<%- include('partials/head') %>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-home">
+  <%- include('partials/navbar') %>
 
-    <!--? ÜST DİVLER -->
-    <div class="section-wrapper" id="anaSayfa">
-
-      <!--? ÜST SOL DİV -->
-
-      <div class="half-column" id="hero-left-col">
-        <h3 style="position: absolute; left: 8%; top: 10%; text-align: center;">
-          <b>Ahmet Erdem Öztürk | Bilgisayar Mühendisi</b>
-        </h3>
-        <img
-          id="fotografim"
-          src="Pictures/fotograf.jpg"
-          alt="Fotoğraf bulunamadı."
-        />
+  <main class="page-main-container">
+    <!-- HERO BÖLÜMÜ -->
+    <section class="hero-split-section">
+      <!-- SOL: Profil Kartı -->
+      <div class="hero-left-wrapper">
+        <div class="profile-card-modern">
+          <% if (profile.statusBadge) { %>
+            <div class="profile-status-badge">
+              <span class="status-dot"></span> <%= profile.statusBadge %>
+            </div>
+          <% } %>
+          <div class="profile-avatar-frame">
+            <img
+              id="fotografim"
+              src="<%= profile.avatar || '/Pictures/fotograf.jpg' %>"
+              alt="<%= profile.name %>"
+            />
+          </div>
+          <div class="profile-meta-row">
+            <% if (profile.location) { %>
+              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> <%= profile.location %></span>
+            <% } %>
+            <% if (profile.tagline) { %>
+              <span class="meta-item"><i class="bi bi-cpu-fill"></i> <%= profile.tagline %></span>
+            <% } %>
+          </div>
+        </div>
       </div>
 
-        <!--? ÜST SAĞ DİV -->
+      <!-- SAĞ: Tanıtım & Butonlar -->
+      <div class="hero-right-wrapper">
+        <div class="greeting-chip"><%= profile.heroGreeting || '👋 Portfolyoma Hoş Geldin' %></div>
+        <h1 class="hero-name-title">
+          <b style="visibility: hidden; grid-area: 1 / 1;"><%- profile.typewriterText || 'Selam, Adım <br />Ahmet Erdem.' %><span style="opacity: 0;">|</span></b>
+          <b id="typewriter-text" style="grid-area: 1 / 1;"></b>
+        </h1>
+        <p class="hero-bio-lead">
+          <%- profile.bioLead %>
+        </p>
 
-      <div class="half-column" id="hero-right-col">
-        <!-- Zaten var olan Ana Sayfa linki yerine, asansörlü yeni menümüzü koyuyoruz -->
-        <nav id="elevator-nav">
-          <div class="nav-links">
-            <a href="#anaSayfa" class="nav-item active">Ana Sayfa</a>
-            <a href="#hakkimda" class="nav-item">Hakkımda</a>
-            <a href="#sertifikalar" class="nav-item">Sertifikalar</a>
-            <a href="#ogrenci-kulubu" class="nav-item">Liderlik</a>
-            <a href="#projelerim" class="nav-item">Projelerim</a>
-          </div>
-          <div class="elevator-track">
-            <div id="elevator">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a4f9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16V8"></path>
-                <path d="M8 12l4-4 4 4"></path>
-              </svg>
-            </div>
-          </div>
-        </nav>
-
-        <!--? ÜST SAĞ DİV -->
-
-        <div id="Anadiv-2_icDivi">
-          <h1 style="display: grid; margin: 0 auto; justify-content: center; text-align: center;">
-            <b style="visibility: hidden; grid-area: 1 / 1;">Selam, Adım <br />Ahmet Erdem.<span style="opacity: 0;">|</span></b>
-            <b id="typewriter-text" style="grid-area: 1 / 1;"></b>
-          </h1>
-          <h5>
-            <b>Eskişehirliyim. <br />
-              Bilgisayar Mühendisiyim.</b>
-            <br /><br />
-          </h5>
-          <a href="https://www.linkedin.com/in/ahmet-erdem-%C3%B6zt%C3%BCrk-a17683248/" target="_blank" style="text-decoration: none;">
-            <button class="social-btn-base" id="LinkedIn_buton">
-              <i class="bi bi-linkedin btn-icon"></i>
-              <span>LinkedIn</span>
-            </button>
+        <div class="hero-actions-row">
+          <a href="/projelerim" class="btn-primary-glow">
+            <i class="bi bi-code-square"></i> Projelerimi İncele
           </a>
-          <a href="https://github.com/thmeaN" target="_blank" style="text-decoration: none;">
-            <button class="social-btn-base" id="GitHub_buton">
-              <i class="bi bi-github btn-icon"></i>
-              <span>GitHub</span>
-            </button>
+          <a href="/iletisim" class="btn-secondary-glass">
+            <i class="bi bi-envelope-fill"></i> İletişime Geç
           </a>
-          <a href="https://www.kaggle.com/nsomnia" target="_blank" style="text-decoration: none;">
-            <button class="social-btn-base" id="Keggle_buton">
-              <img src="Pictures/kaggle logo.png" class="btn-icon" alt="Kaggle" />
-              <span>Kaggle</span>
-            </button>
-          </a>
-          <br />
-        </div>
-      </div>
-    </div>
-
-    <!--? ALT DİV -->
-
-    <div id="hakkimda" class="section-wrapper">
-      <button class="scroll-top-btn" id="scrollTopBtn">
-        <svg class="scroll-top-icon" viewBox="0 0 384 512">
-          <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-        </svg>
-      </button>
-
-      <!--? ALT SOL DİV -->
-
-         <div id="about-glass-wrapper" class="half-column">
-        <div class="glass-card-container">
-          <div class="glass-card-content">
-            <h3>Merhaba, Ben Ahmet Erdem 👋</h3>
-            <br />
-            <p>
-              Bilgisayar Mühendisliği bölümünde öğrenciyim ve kodlama dünyasında
-              kendi yolumu çizmeye çalışıyorum. Henüz yolun başında olsam da
-              öğrenme tutkum çok yüksek.
-            </p>
-
-            <p>
-              Derslerden arta kalan zamanımda
-              <strong>kendimi geliştirmek için</strong> sürekli yeni
-              teknolojileri kurcalıyor ve projeler üretiyorum. Amacım, her gün
-              bir önceki günden daha iyi kod yazabilmek.
-            </p>
-
-            <div class="skills-container">
-              <h3>Teknoloji Yığınım</h3>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Java</span>
-                <span class="tag">C</span>
-                <span class="tag">C++</span>
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">SQL</span>
-                <span class="tag">Flutter</span>
-                <span class="tag">Machine Learning</span>
-                <span class="tag">LLM</span>
-                <span class="tag">NLP</span>
-                <span class="tag">Git</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--? ALT SAĞ DİV -->
-
-      <div class="half-column">
-        <div class="contact-card">
-          <h2>Bana Ulaşın 📩</h2>
-          <p>Projeleriniz, iş teklifleri veya tanışmak için yazabilirsiniz.</p>
-          <form id="contactForm" class="contact-form">
-            <div id="formMessage" style="display: none; padding: 15px; margin-bottom: 15px; border-radius: 5px; font-weight: 500;"></div>
-            <div class="form-group">
-              <label for="name">Adınız Soyadınız</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Örn: Ahmet Erdem"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">E-posta Adresiniz</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="mail@ornek.com"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="message">Mesajınız</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                placeholder="Mesajınızı buraya yazın..."
-                required
-                ></textarea>
-            </div>
-            <button type="submit" class="contact-btn" id="submitBtn">Gönder 🚀</button>
-          </form>
-        </div>
-      </div>
-    </div> <!-- hakkimda sonu -->
-
-    <!-- Sertifikalar Bölümü -->
-    <div id="sertifikalar" class="half-column">
-      <h1 style="width: 100%; text-align: center; color: white;">Sertifikalarım 📜</h1>
-      <div class="certificates-container">
-        <!-- Sertifika 1 -->
-        <div class="certificate-card">
-          <img src="Pictures/sertifika1.jpg" alt="Sertifika 1" class="certificate-image" />
-          <div class="certificate-title">Cybersecurity Fundamentals</div>
-          <div class="certificate-issuer">IBM SkillsBuild</div>
-          <a href="https://www.credly.com/badges/bed2c169-5063-420c-ac58-204945dc9710/public_url" target="_blank" class="certificate-link">Kontrol Et →</a>
         </div>
 
-        <!-- Sertifika 2 -->
-        <div class="certificate-card">
-          <img src="Pictures/sertifika2.jpg" alt="Sertifika 2" class="certificate-image" />
-          <div class="certificate-title">Working in a Digital World: Professional Skills</div>
-          <div class="certificate-issuer">IBM SkillsBuild</div>
-          <a href="https://www.credly.com/badges/03ad843f-1714-48ef-8ec2-b2fd1f516c06/public_url" target="_blank" class="certificate-link">Kontrol Et →</a>
-        </div>
-
-        <!-- Sertifika 3 -->
-        <div class="certificate-card">
-          <img src="Pictures/sertifika3.jpg" alt="Sertifika 3" class="certificate-image" />
-          <div class="certificate-title">Explore Emerging Tech</div>
-          <div class="certificate-issuer">IBM SkillsBuild</div>
-          <a href="https://www.credly.com/badges/49b500e7-6953-4796-9da1-30efd4553194/public_url" target="_blank" class="certificate-link"">Kontrol Et →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Öğrenci Kulübü Başkanlığı Bölümü -->
-    <div id="ogrenci-kulubu" class="club-section">
-      <h1 class="club-title">Liderlik 🎓</h1>
-
-      <!-- SOL TARAF - BURAYA YENİ TASARIM GELECEK -->
-      <div class="club-left">
-        <!-- Yeni tasarım buraya eklenecek -->
-      </div>
-
-      <!-- SAĞ TARAF - BİLGİLER -->
-      <div class="club-right">
-        <div class="club-card-compact">
-          <div class="club-header-compact">
-            <h2 class="club-name-compact">A.T.A.K.</h2>
-            <div class="club-period-compact">Akılcı Teknoloji ve Araştırma Kulübü Kurucu Başkanı</div>
-          </div>
-          
-          <div class="club-content-compact">
-            <p>Danışmanlığını Prof. Dr. Cihan Karakuzu hocamızın yaptığı Akılcı Teknoloji ve Araştırma Kulübü'nün başkanı olarak, öğrenci arkadaşlarımızın teknolojiye olan ilgilerini somut projelere dönüştürmelerine liderlik ediyorum. Problemleri 'akılcı' teknolojilerle çözen ve ekip çalışmasına inanan yüzlerce üyemizle birlikte çıktığımız bu yolda temel odak noktalarımız: <br> <br>🚀 <b>Proje ve Takım Yönetimi</b>: Başta <b>Teknofest</b> olmak üzere çeşitli teknoloji yarışmaları için vizyoner proje ekipleri kurmak ve süreçlerini koordine etmek. <br><br>⚙️ <b>Teknik Gelişim</b>: Yapay Zeka (AI), makine öğrenmesi ve güncel yazılım teknolojileri üzerine çalışma grupları ve etkinlikler düzenleyerek birlikte öğrenme kültürü yaratmak. <br><br>Arkadaşlarımla birlikte öğrenmeye, eğlenmeye ve akılcı projeler üretmeye devam edeceğiz.</p>
-          </div>
-
-          <div class="club-social-links">
-            <a href="https://www.instagram.com/atak.bseu/" target="_blank" class="club-social-btn" title="Instagram">
-              <i class="bi bi-instagram"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/ak%C4%B1lc%C4%B1-teknoloji-ve-ara%C5%9Ft%C4%B1rma-kul%C3%BCb%C3%BC/" target="_blank" class="club-social-btn" title="LinkedIn">
+        <div class="hero-social-grid">
+          <% if (profile.socials && profile.socials.linkedin) { %>
+            <a href="<%= profile.socials.linkedin %>" target="_blank" class="social-glass-pill linkedin" title="LinkedIn">
               <i class="bi bi-linkedin"></i>
+              <span>LinkedIn</span>
             </a>
-          </div>
+          <% } %>
+          <% if (profile.socials && profile.socials.github) { %>
+            <a href="<%= profile.socials.github %>" target="_blank" class="social-glass-pill github" title="GitHub">
+              <i class="bi bi-github"></i>
+              <span>GitHub</span>
+            </a>
+          <% } %>
+          <% if (profile.socials && profile.socials.kaggle) { %>
+            <a href="<%= profile.socials.kaggle %>" target="_blank" class="social-glass-pill kaggle" title="Kaggle">
+              <img src="/Pictures/kaggle%20logo.png" alt="Kaggle" />
+              <span>Kaggle</span>
+            </a>
+          <% } %>
+          <% if (profile.socials && profile.socials.instagram) { %>
+            <a href="<%= profile.socials.instagram %>" target="_blank" class="social-glass-pill" title="Instagram">
+              <i class="bi bi-instagram" style="color: #e1306c;"></i>
+              <span>Instagram</span>
+            </a>
+          <% } %>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div id="projelerim" class="projects-section">
-      <h1 style="width: 100%; text-align: center; color: white; margin-bottom: 20px;">Projelerim 💻</h1>
-      <div class="projects-container">
-        
-        <!-- Proje 1 -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">Snapframe</h3>
-          </div>
-          <div class="project-body">
-            <p class="project-description">
-              TEKNOFEST için Türkçe doğal dil komutlarını yapılandırılmış JSON aksiyonlarına çevirerek bilgisayarı insan gibi kullanan otonom bir sistem geliştirdik. Bu sistemi düşünürken amacımız engelli bireylerin bilgisayar kullanımını kolaylaştırmak ve erişilebilirliğini arttırmaktı. 
-            </p>
-            
-            <div class="project-role">
-              <strong>Rolüm: Proje Kaptanı, Yazılım Geliştirici</strong>
-              <p>Takımımdaki kordinasyonu sağlıyorum. Projenin beyni olan yapay zeka asistanını geliştiriyorum aynı zamanda projenin arayüzünü geliştiriyorum.</p>
-            </div>
+    <!-- HIZLI ÖNE ÇIKANLAR (Bento Highlights) -->
+    <section class="home-highlights-section">
+      <div class="home-bento-grid">
+        <% if (profile.highlights && profile.highlights.length > 0) { %>
+          <% profile.highlights.forEach((card, index) => { %>
+            <a href="<%= card.linkUrl || '#' %>" class="bento-highlight-card <%= card.badge ? 'featured-border' : '' %>">
+              <div class="bento-card-icon"><%= card.icon || '📌' %></div>
+              <% if (card.badge) { %>
+                <div class="card-badge"><%= card.badge %></div>
+              <% } %>
+              <h3><%= card.title %></h3>
+              <p><%= card.description %></p>
+              <span class="bento-arrow-link"><%= card.linkText || 'İncele' %> <i class="bi bi-arrow-right"></i></span>
+            </a>
+          <% }); %>
+        <% } %>
+      </div>
+    </section>
+  </main>
 
-            <div class="project-tech">
-              <strong>Teknoloji Yığını:</strong>
-              <div class="tech-tags">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">Fine Tuning</span>
-                <span class="tech-tag">Görüntü İşleme</span>
-                <span class="tech-tag">SQL</span>
-                <span class="tech-tag">Git</span>
-                <span class="tech-tag">Notion</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  <%- include('partials/footer') %>
 
-        <!-- Proje 2 -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">Motionbridge</h3>
-          </div>
-          <div class="project-body">
-            <p class="project-description">
-              Telefonumuzdan bilgisayarımızı touchpad mantığı ile akıcı şekilde kontrol edebileceğimiz bir uygulama geliştirdik. Telefonun hareketlerini algılayarak bilgisayara komut gönderen bir sistem kurduk.
-            </p>
-            
-            <div class="project-role">
-              <strong>Rolüm: Yazılım Geliştirici</strong>
-              <p>Projenin windows tarafındaki geliştirme sorumluluklarımı üstlendim. Mobil tarafı da aynı şekilde geliştiriyorum. Mobilden bilgisayar tarafına bazı komutlar gönderebiliyoruz bu sayede telefon üzerinden bilgisayarı kontorl edebiliyoruz.</p>
-            </div>
+  <script>
+    const text = <%- JSON.stringify(profile.typewriterText || "Selam, Adım <br />Ahmet Erdem.") %>;
+    const target = document.getElementById("typewriter-text");
+    let index = 0;
 
-            <div class="project-tech">
-              <strong>Teknoloji Yığını:</strong>
-              <div class="tech-tags">
-                <span class="tech-tag">Java</span>
-                <span class="tech-tag">Flutter</span>
-                <span class="tech-tag">Dart</span>
-                <span class="tech-tag">Git</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 3 -->
-        <!-- <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">İnternet Sitem</h3>
-          </div>
-          <div class="project-body">
-            <p class="project-description">
-              Kendi kişisel portfolyo sitemi geliştirdim. Bu siteyi geliştirirken amacım, kendimi tanıtabileceğim, projelerimi sergileyebileceğim ve benimle iletişime geçilebilecek bir platform oluşturmaktı. 
-            </p>
-            
-            <div class="project-role">
-              <strong>Rolüm: Web Geliştirici</strong>
-              <p>Projede frontend ve backend geliştirme sorumluluklarımı üstlendim. Kullanıcı deneyimini en iyi şekilde sağlamak için çaba sarf ettim. Yenilikçi sade ve kullanıcı dostu bir arayüz tasarladım. Renklerle birlikte aşağı indikçe buz dağına benzeyen bir efekt yaratmaya çalıştım.</p>
-            </div>
-
-            <div class="project-tech">
-              <strong>Teknoloji Yığını:</strong>
-              <div class="tech-tags">
-                <span class="tech-tag">HTML</span>
-                <span class="tech-tag">CSS</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">MVC</span>
-                <span class="tech-tag">Git</span>
-                <span class="tech-tag">Yapay Zeka</span>
-              </div>
-            </div>
-          </div> -->
-  
-    </div>
-    
-
-    <script src="script.js"></script>
-    <script>
-      const text = "Selam, Adım <br />Ahmet Erdem.";
-      const target = document.getElementById("typewriter-text");
-      let index = 0;
-
-      function typeWriter() {
-        if (index < text.length) {
-          if (text.charAt(index) === '<') {
-            index = text.indexOf('>', index);
-          }
-          
-          target.innerHTML = text.substring(0, index + 1) + "<span class='cursor'>|</span>";
-          index++;
-          setTimeout(typeWriter, 100);
-        } else {
-          target.innerHTML = text + "<span class='cursor'>|</span>";
+    function typeWriter() {
+      if (index < text.length) {
+        if (text.charAt(index) === '<') {
+          index = text.indexOf('>', index);
         }
+        target.innerHTML = text.substring(0, index + 1) + "<span class='cursor'>|</span>";
+        index++;
+        setTimeout(typeWriter, 85);
+      } else {
+        target.innerHTML = text + "<span class='cursor'>|</span>";
       }
-      
-      // Sayfa yüklendiğinde daktilo efektini başlat
-      window.onload = () => {
-        setTimeout(typeWriter, 500);
-      };
-
-      // Yukarı Çıkar Butonu Scroll Efekti
-      const scrollBtn = document.getElementById("scrollTopBtn");
-      window.addEventListener("scroll", () => {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-          scrollBtn.classList.add("show");
-        } else {
-          scrollBtn.classList.remove("show");
-        }
-      });
-      
-      // Asansör ve Navigasyon Menüsü İşlemleri
-      const navLinksCont = document.querySelector('.nav-links');
-      const navItems = document.querySelectorAll('.nav-item');
-      const elevator = document.getElementById('elevator');
-      const sections = Array.from(navItems).map(item => document.querySelector(item.getAttribute('href')));
-
-      function updateElevator() {
-        if (!navLinksCont || !elevator) return;
-        
-        let current = 0;
-        for (let i = 0; i < sections.length; i++) {
-          if (sections[i]) {
-            const rect = sections[i].getBoundingClientRect();
-            // Sayfanın ortasını geçtiğinde aktif olsun
-            if (rect.top <= window.innerHeight / 2) {
-              current = i;
-            }
-          }
-        }
-        
-        navItems.forEach(item => item.classList.remove('active'));
-        if (navItems[current]) {
-          navItems[current].classList.add('active');
-          const itemRect = navItems[current].getBoundingClientRect();
-          const trackRect = document.querySelector('.elevator-track').getBoundingClientRect();
-          
-          // Hesaplanan pozisyonu asansör ikonuna aktar (Tam merkeze hizalama)
-          const itemMiddle = itemRect.top - trackRect.top + (itemRect.height / 2);
-          const elevatorHeight = 26; // Sabit ikon yüksekliği olarak alabiliriz
-          
-          elevator.style.transform = `translateY(${itemMiddle - (elevatorHeight / 2)}px) scale(0.85)`;
-        }
-      }
-
-      window.addEventListener('scroll', updateElevator);
-      window.addEventListener('resize', updateElevator);
-      setTimeout(updateElevator, 100);
-
-      // Tıklandığında en üste yumuşak kayma
-      scrollBtn.addEventListener("click", function(e) {
-        e.preventDefault();
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
-      });
-    </script>
+    }
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="semantic/dist/semantic.min.js"></script>
-    
-    <script>
-      // Form Submit Handler - DOMContentLoaded'de çalış
-      document.addEventListener('DOMContentLoaded', function() {
-        const contactForm = document.getElementById('contactForm');
-        
-        if (contactForm) {
-          contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const formMessage = document.getElementById('formMessage');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Gönderiliyor...';
-            formMessage.style.display = 'none';
-            
-            try {
-              const response = await fetch('/contact', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                },
-                body: JSON.stringify({ name, email, message })
-              });
-              
-              const data = await response.json();
-              
-              if (data.ok) {
-                formMessage.style.backgroundColor = '#d4edda';
-                formMessage.style.color = '#155724';
-                formMessage.style.border = '1px solid #c3e6cb';
-                formMessage.textContent = '✅ Mesajınız başarıyla gönderildi! Çok yakında size dönüş yapacağım.';
-                formMessage.style.display = 'block';
-                
-                document.getElementById('contactForm').reset();
-                submitBtn.textContent = 'Gönder 🚀';
-                submitBtn.disabled = false;
-                
-                setTimeout(() => {
-                  formMessage.style.display = 'none';
-                }, 5000);
-              } else {
-                formMessage.style.backgroundColor = '#f8d7da';
-                formMessage.style.color = '#721c24';
-                formMessage.style.border = '1px solid #f5c6cb';
-                formMessage.textContent = '❌ Hata: ' + (data.error || data.errors?.[0] || 'Bilinmeyen hata');
-                formMessage.style.display = 'block';
-                submitBtn.textContent = 'Gönder 🚀';
-                submitBtn.disabled = false;
-              }
-            } catch (error) {
-              formMessage.style.backgroundColor = '#f8d7da';
-              formMessage.style.color = '#721c24';
-              formMessage.style.border = '1px solid #f5c6cb';
-              formMessage.textContent = '❌ Ağ hatası. Lütfen tekrar deneyin.';
-              formMessage.style.display = 'block';
-              submitBtn.textContent = 'Gönder 🚀';
-              submitBtn.disabled = false;
-            }
-          });
-        }
-      });
-    </script>
-  
+    window.onload = () => {
+      setTimeout(typeWriter, 350);
+    };
+  </script>
 </body>
 </html>

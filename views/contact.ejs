@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-contact">
+  <%- include('partials/navbar') %>
+
+  <main class="page-main-container">
+    <div class="page-header-box">
+      <div class="breadcrumb-chip">📩 İletişim Kanalları</div>
+      <h1 class="page-title">Bana Ulaşın</h1>
+      <p class="page-subtitle">Projeleriniz, iş veya staj fırsatları ya da sadece tanışmak için bir mesaj bırakın.</p>
+    </div>
+
+    <div class="contact-split-layout">
+      <!-- Sol: İletişim Bilgileri & Sosyal Ağlar -->
+      <div class="contact-info-panel glass-panel">
+        <h2>Birlikte Harika Şeyler Üretelim 🚀</h2>
+        <p>
+          Yeni teknolojiler, yapay zeka projeleri ve yazılım mimarileri üzerine konuşmaktan her zaman heyecan duyarım.
+        </p>
+
+        <div class="contact-details-list">
+          <div class="contact-detail-item">
+            <div class="detail-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <strong>Konum</strong>
+              <p>Eskişehir, Türkiye</p>
+            </div>
+          </div>
+
+          <div class="contact-detail-item">
+            <div class="detail-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div>
+              <strong>Eğitim & Rol</strong>
+              <p>Bilgisayar Mühendisliği Öğrencisi & A.T.A.K. Başkanı</p>
+            </div>
+          </div>
+
+          <div class="contact-detail-item">
+            <div class="detail-icon"><i class="bi bi-envelope-check-fill"></i></div>
+            <div>
+              <strong>E-posta</strong>
+              <p>Form üzerinden doğrudan bana ulaşabilirsiniz.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-social-section">
+          <h4>Sosyal Medya & Platformlar:</h4>
+          <div class="contact-social-row">
+            <a href="https://www.linkedin.com/in/ahmet-erdem-%C3%B6zt%C3%BCrk-a17683248/" target="_blank" class="contact-social-chip linkedin">
+              <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+            <a href="https://github.com/thmeaN" target="_blank" class="contact-social-chip github">
+              <i class="bi bi-github"></i> GitHub
+            </a>
+            <a href="https://www.kaggle.com/nsomnia" target="_blank" class="contact-social-chip kaggle">
+              <img src="/Pictures/kaggle%20logo.png" alt="Kaggle" /> Kaggle
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sağ: İletişim Formu -->
+      <div class="contact-form-panel glass-panel">
+        <h2>Mesaj Gönderin</h2>
+        <p>Aşağıdaki formu doldurduğunuzda mesajınız doğrudan e-posta kutuma iletilir.</p>
+
+        <form id="contactForm" class="contact-form-styled">
+          <div id="formMessage" style="display: none; padding: 14px; margin-bottom: 16px; border-radius: 10px; font-weight: 600;"></div>
+          
+          <div class="form-group">
+            <label for="name">Adınız Soyadınız *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Örn: Ahmet Erdem"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-posta Adresiniz *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="mail@ornek.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Mesajınız *</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Mesajınızı, proje fikrinizi veya teklifinizi buraya yazabilirsiniz..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="contact-btn-submit" id="submitBtn">
+            <span>Mesajı Gönder</span> <i class="bi bi-send-fill"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactForm = document.getElementById('contactForm');
+      
+      if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const message = document.getElementById('message').value;
+          const formMessage = document.getElementById('formMessage');
+          const submitBtn = document.getElementById('submitBtn');
+          
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span>Gönderiliyor...</span> <i class="bi bi-arrow-repeat spin"></i>';
+          formMessage.style.display = 'none';
+          
+          try {
+            const response = await fetch('/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ name, email, message })
+            });
+            
+            const data = await response.json();
+            
+            if (data.ok) {
+              formMessage.style.backgroundColor = 'rgba(74, 222, 128, 0.2)';
+              formMessage.style.color = '#a7f3d0';
+              formMessage.style.border = '1px solid rgba(74, 222, 128, 0.4)';
+              formMessage.textContent = '✅ Mesajınız başarıyla iletildi! En kısa sürede dönüş yapacağım.';
+              formMessage.style.display = 'block';
+              
+              contactForm.reset();
+              submitBtn.innerHTML = '<span>Mesaj Gönderildi!</span> <i class="bi bi-check-circle-fill"></i>';
+              
+              setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Mesajı Gönder</span> <i class="bi bi-send-fill"></i>';
+              }, 4000);
+            } else {
+              formMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+              formMessage.style.color = '#fca5a5';
+              formMessage.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+              formMessage.textContent = '❌ Hata: ' + (data.error || data.errors?.[0] || 'Bilinmeyen hata');
+              formMessage.style.display = 'block';
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<span>Mesajı Gönder</span> <i class="bi bi-send-fill"></i>';
+            }
+          } catch (error) {
+            formMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+            formMessage.style.color = '#fca5a5';
+            formMessage.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+            formMessage.textContent = '❌ Ağ hatası oluştu. Lütfen daha sonra tekrar deneyiniz.';
+            formMessage.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Mesajı Gönder</span> <i class="bi bi-send-fill"></i>';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

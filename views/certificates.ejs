@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="page-certificates">
+  <%- include('partials/navbar') %>
+
+  <main class="page-main-container">
+    <div class="page-header-box">
+      <div class="breadcrumb-chip">📜 Yetkinlik Belgeleri</div>
+      <h1 class="page-title">Sertifikalarım</h1>
+      <p class="page-subtitle">Siber güvenlik, profesyonel çalışma kültürü ve yükselen teknolojiler alanındaki akredite eğitimlerim.</p>
+    </div>
+
+    <% if (!certificates || certificates.length === 0) { %>
+      <div class="glass-panel" style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 3rem; margin-bottom: 15px;">📜</div>
+        <h3>Henüz Sertifika Eklenmedi</h3>
+        <p style="opacity: 0.8;">Admin panelinden eklenen sertifikalar burada gösterilecektir.</p>
+      </div>
+    <% } else { %>
+      <div class="certificates-page-grid">
+        <% certificates.forEach(cert => { %>
+          <div class="certificate-full-card glass-panel" id="<%= cert.id %>">
+            <div class="cert-image-holder">
+              <img src="<%= cert.imageUrl || '/Pictures/sertifika1.jpg' %>" alt="<%= cert.title %>" />
+            </div>
+            <div class="cert-info-holder">
+              <% if (cert.issuer) { %>
+                <div class="cert-badge"><%= cert.issuer %></div>
+              <% } %>
+              <h3><%= cert.title %></h3>
+              <p><%= cert.description %></p>
+              <% if (cert.verifyUrl) { %>
+                <div class="cert-action-row">
+                  <a href="<%= cert.verifyUrl %>" target="_blank" class="cert-verify-btn">
+                    <i class="bi bi-patch-check-fill"></i> Doğrula / İncele
+                  </a>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

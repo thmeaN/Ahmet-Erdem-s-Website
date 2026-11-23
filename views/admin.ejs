@@ -3,319 +3,1281 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - İletişim Mesajları</title>
+  <title>Yönetim Paneli | Ahmet Erdem Öztürk</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
   <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --accent: #06b6d4;
+    }
+
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-color: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      padding: 20px;
+      margin: 0;
+      padding-bottom: 60px;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
+    /* Topbar */
+    .admin-navbar {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
     }
 
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
       color: white;
-      padding: 30px;
-      text-align: center;
+      text-decoration: none;
     }
 
-    .header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+    .admin-brand span {
+      background: linear-gradient(135deg, #a5b4fc, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    .stats {
+    .nav-actions {
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 20px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Tabs Styling */
+    .admin-tabs-nav {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 6px;
+      display: flex;
+      gap: 6px;
       flex-wrap: wrap;
+      border: 1px solid var(--card-border);
+      margin-bottom: 25px;
     }
 
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: bold;
-    }
-
-    .stat-label {
+    .admin-tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
       font-size: 0.9rem;
-      opacity: 0.8;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
 
-    .content {
-      padding: 30px;
+    .admin-tab-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .messages-grid {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    .admin-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
     }
 
-    .message-card {
-      background: #f8f9fa;
-      border-left: 5px solid #667eea;
-      padding: 20px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    .message-card:hover {
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transform: translateY(-2px);
+    /* Panels & Cards */
+    .admin-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
 
-    .message-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 15px;
-    }
-
-    .message-name {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #333;
-    }
-
-    .message-date {
-      font-size: 0.85rem;
-      color: #999;
-      white-space: nowrap;
-    }
-
-    .message-email {
-      color: #667eea;
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      word-break: break-all;
-    }
-
-    .message-text {
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 15px;
-      max-height: 150px;
-      overflow-y: auto;
-    }
-
-    .message-footer {
+    .admin-card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
     }
 
-    .delete-btn {
-      background: #ff6b6b;
+    .admin-card-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Form Controls */
+    .form-label {
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-control, .form-select {
+      background-color: var(--input-bg) !important;
+      border: 1px solid var(--input-border) !important;
+      color: var(--text) !important;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2) !important;
+    }
+
+    .form-text {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      margin-top: 4px;
+    }
+
+    /* Buttons */
+    .btn-save-primary {
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
     }
 
-    .delete-btn:hover {
-      background: #ff5252;
-      transform: scale(1.05);
-    }
-
-    .reply-btn {
-      background: #40c057;
+    .btn-save-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
       color: white;
-      border: none;
+    }
+
+    .btn-custom-outline {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text);
       padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      margin-right: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
     }
 
-    .reply-btn:hover {
-      background: #37b24d;
-      transform: scale(1.05);
+    .btn-custom-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
-    .empty-state {
+    /* Message Cards */
+    .msg-item-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .msg-item-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .msg-author {
+      font-weight: 700;
+      color: #f1f5f9;
+      font-size: 1rem;
+    }
+
+    .msg-email {
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+
+    .msg-body {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* Item Grid (Projects, Certs, Media) */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .item-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .item-box:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .media-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-thumb {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      background: #0b1120;
+    }
+
+    .media-info {
+      padding: 10px;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-mini-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 18px;
       text-align: center;
-      padding: 60px 20px;
-      color: #999;
     }
 
-    .empty-state-icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
+    .stat-mini-pill .num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
     }
 
-    .empty-state h2 {
-      color: #666;
-      margin-bottom: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .messages-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .header h1 {
-        font-size: 1.8rem;
-      }
-
-      .stats {
-        gap: 15px;
-      }
+    .stat-mini-pill .lbl {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>📨 İletişim Yönetim Paneli</h1>
-      <p>Gelen mesajları yönet ve yanıtla</p>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-number"><%= stats.totalMessages %></div>
-          <div class="stat-label">Toplam Mesaj</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number"><%= stats.todayCount %></div>
-          <div class="stat-label">Bugün</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number"><%= stats.uniqueEmails %></div>
-          <div class="stat-label">Benzersiz E-posta</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="content">
-      <!-- Arama Formu -->
-      <form method="GET" action="/admin" style="margin-bottom: 30px; display: flex; gap: 10px;">
-        <input type="text" name="search" placeholder="🔍 Adı, emaili veya mesajı ara..." value="<%= searchQuery %>" 
-          style="flex: 1; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
-        <button type="submit" style="background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s;">
-          Ara
-        </button>
-        <% if (searchQuery) { %>
-          <a href="/admin" style="background: #999; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; display: flex; align-items: center; transition: 0.3s;">
-            Temizle
-          </a>
-        <% } %>
-      </form>
-
-      <!-- Arama Sonucu -->
-      <% if (searchQuery) { %>
-        <div style="background: #e8f5e9; border-left: 4px solid #40c057; padding: 12px 15px; margin-bottom: 20px; border-radius: 5px;">
-          🔍 "<%= searchQuery %>" için <strong><%= count %></strong> mesaj bulundu
-        </div>
-      <% } %>
-
-      <!-- Logout Butonu -->
-      <div style="text-align: right; margin-bottom: 20px;">
-        <a href="/logout" style="background: #ff6b6b; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; transition: 0.3s;">
-          🚪 Çıkış Yap
+  <!-- TOP NAVBAR -->
+  <header class="admin-navbar">
+    <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+      <a href="/admin" class="admin-brand">
+        <i class="bi bi-shield-lock-fill text-primary" style="font-size: 1.4rem;"></i>
+        <div>Ahmet Erdem <span>CMS & Yönetim</span></div>
+      </a>
+      <div class="nav-actions">
+        <a href="/" target="_blank" class="btn-custom-outline">
+          <i class="bi bi-box-arrow-up-right"></i> Siteyi Gör
+        </a>
+        <a href="/logout" class="btn btn-outline-danger btn-sm" style="border-radius: 8px;">
+          <i class="bi bi-box-arrow-right"></i> Çıkış
         </a>
       </div>
-      <% if (messages.length === 0) { %>
-        <div class="empty-state">
-          <div class="empty-state-icon">📭</div>
-          <h2>Henüz mesaj yok</h2>
-          <p>Mesaj geldiğinde burada görünecek</p>
+    </div>
+  </header>
+
+  <main class="container-fluid px-4 mt-4">
+
+    <!-- BİLDİRİMLER -->
+    <% if (notification && notification.success) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; border-radius: 10px;">
+        <i class="bi bi-check-circle-fill me-2"></i> <%= notification.success %>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+    <% if (notification && notification.error) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; border-radius: 10px;">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> <%= notification.error %>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <!-- TABS NAVIGATION -->
+    <nav class="admin-tabs-nav">
+      <a href="/admin?tab=messages" class="admin-tab-btn <%= activeTab === 'messages' ? 'active' : '' %>">
+        <i class="bi bi-envelope-fill"></i> Mesajlar
+        <span class="tab-badge"><%= stats.totalMessages %></span>
+      </a>
+      <a href="/admin?tab=profile" class="admin-tab-btn <%= activeTab === 'profile' ? 'active' : '' %>">
+        <i class="bi bi-person-badge-fill"></i> Profil & Ana Sayfa
+      </a>
+      <a href="/admin?tab=about" class="admin-tab-btn <%= activeTab === 'about' ? 'active' : '' %>">
+        <i class="bi bi-info-circle-fill"></i> Hakkımda & Yetkinlikler
+      </a>
+      <a href="/admin?tab=projects" class="admin-tab-btn <%= activeTab === 'projects' ? 'active' : '' %>">
+        <i class="bi bi-code-slash"></i> Projelerim
+        <span class="tab-badge"><%= (siteData.projects || []).length %></span>
+      </a>
+      <a href="/admin?tab=certificates" class="admin-tab-btn <%= activeTab === 'certificates' ? 'active' : '' %>">
+        <i class="bi bi-patch-check-fill"></i> Sertifikalarım
+        <span class="tab-badge"><%= (siteData.certificates || []).length %></span>
+      </a>
+      <a href="/admin?tab=leadership" class="admin-tab-btn <%= activeTab === 'leadership' ? 'active' : '' %>">
+        <i class="bi bi-mortarboard-fill"></i> Liderlik & A.T.A.K.
+      </a>
+      <a href="/admin?tab=media" class="admin-tab-btn <%= activeTab === 'media' ? 'active' : '' %>">
+        <i class="bi bi-images"></i> Medya & Dosya Yükle
+      </a>
+    </nav>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: GELEN MESAJLAR                                          -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'messages') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-inbox-fill text-primary"></i> Gelen İletişim Mesajları</h2>
+          <div class="d-flex gap-2">
+            <div class="stat-mini-pill">
+              <div class="num"><%= stats.totalMessages %></div>
+              <div class="lbl">Toplam</div>
+            </div>
+            <div class="stat-mini-pill">
+              <div class="num"><%= stats.todayCount %></div>
+              <div class="lbl">Bugün</div>
+            </div>
+            <div class="stat-mini-pill">
+              <div class="num"><%= stats.uniqueEmails %></div>
+              <div class="lbl">Farklı Kişi</div>
+            </div>
+          </div>
         </div>
-      <% } else { %>
-        <div class="messages-grid">
-          <% messages.forEach(msg => { %>
-            <div class="message-card" data-id="<%= msg.id %>">
-              <div class="message-header">
-                <div class="message-name"><%= msg.name %></div>
-                <div class="message-date">
-                  <%= new Date(msg.createdAt).toLocaleDateString('tr-TR', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  }) %>
+
+        <!-- Arama Formu -->
+        <form method="GET" action="/admin" class="row g-2 mb-4">
+          <input type="hidden" name="tab" value="messages" />
+          <div class="col-md-10">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              placeholder="🔍 İsim, e-posta veya mesaj metninde ara..."
+              value="<%= searchQuery %>"
+            />
+          </div>
+          <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Ara</button>
+            <% if (searchQuery) { %>
+              <a href="/admin?tab=messages" class="btn btn-secondary">Temizle</a>
+            <% } %>
+          </div>
+        </form>
+
+        <% if (messages.length === 0) { %>
+          <div class="text-center py-5 text-muted">
+            <i class="bi bi-mailbox2" style="font-size: 3rem;"></i>
+            <h4 class="mt-3">Mesaj Bulunamadı</h4>
+            <p>Arama kriterine uygun veya yeni gelen bir mesaj yok.</p>
+          </div>
+        <% } else { %>
+          <div class="row">
+            <% messages.forEach(msg => { %>
+              <div class="col-lg-6" id="msg-card-<%= msg.id %>">
+                <div class="msg-item-card">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                      <div class="msg-author"><%= msg.name %></div>
+                      <div class="msg-email"><i class="bi bi-envelope"></i> <%= msg.email %></div>
+                    </div>
+                    <span class="badge bg-dark border border-secondary text-light">
+                      <%= new Date(msg.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) %>
+                    </span>
+                  </div>
+
+                  <div class="msg-body"><%= msg.message %></div>
+
+                  <div class="d-flex justify-content-between align-items-center pt-2">
+                    <a
+                      href="mailto:<%= msg.email %>?subject=<%= encodeURIComponent('Re: ' + msg.name) %>"
+                      class="btn btn-sm btn-outline-success"
+                    >
+                      <i class="bi bi-reply-fill"></i> E-posta ile Yanıtla
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      onclick="deleteMsg('<%= msg.id %>')"
+                    >
+                      <i class="bi bi-trash3-fill"></i> Sil
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="message-email">✉️ <%= msg.email %></div>
-              <div class="message-text"><%= msg.message %></div>
-              <div class="message-footer">
-                <button class="reply-btn" onclick="openEmail('<%= msg.email %>', '<%= msg.name.replace(/'/g, "\\\\'") %>')">Cevapla</button>
-                <button class="delete-btn" onclick="deleteMessage('<%= msg.id %>')">Sil</button>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: PROFİL & ANA SAYFA                                      -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'profile') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-person-lines-fill text-primary"></i> Profil & Ana Sayfa Ayarları</h2>
+          <span class="text-muted small">Ana sayfadaki hero, biyografi ve sosyal bağlantıları yönetin</span>
+        </div>
+
+        <form method="POST" action="/admin/profile">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Ad Soyad</label>
+              <input type="text" name="name" class="form-control" value="<%= siteData.profile.name %>" required />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Durum Rozeti (Örn: Bilgisayar Mühendisliği)</label>
+              <input type="text" name="statusBadge" class="form-control" value="<%= siteData.profile.statusBadge %>" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Konum / Şehir</label>
+              <input type="text" name="location" class="form-control" value="<%= siteData.profile.location %>" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Uzmanlık Başlığı (Örn: AI & Yazılım)</label>
+              <input type="text" name="tagline" class="form-control" value="<%= siteData.profile.tagline %>" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Profil Fotoğrafı URL / Yolu</label>
+              <input type="text" name="avatar" class="form-control" value="<%= siteData.profile.avatar %>" />
+              <div class="form-text">Medya sekmesinden yüklediğiniz bir görsel yolunu yapıştırabilirsiniz.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Karşılama Rozeti (Hero Greeting)</label>
+              <input type="text" name="heroGreeting" class="form-control" value="<%= siteData.profile.heroGreeting %>" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Daktilo (Typewriter) Metni (HTML destekler: &lt;br /&gt;)</label>
+              <input type="text" name="typewriterText" class="form-control" value="<%= siteData.profile.typewriterText %>" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Kısa Hero Biyografisi (HTML &lt;b&gt; etiketleri destekler)</label>
+              <textarea name="bioLead" class="form-control" rows="3"><%= siteData.profile.bioLead %></textarea>
+            </div>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">🌐 Sosyal Medya Bağlantıları</h4>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-linkedin"></i> LinkedIn URL</label>
+              <input type="url" name="linkedin" class="form-control" value="<%= siteData.profile.socials.linkedin %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-github"></i> GitHub URL</label>
+              <input type="url" name="github" class="form-control" value="<%= siteData.profile.socials.github %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-bar-chart-fill"></i> Kaggle URL</label>
+              <input type="url" name="kaggle" class="form-control" value="<%= siteData.profile.socials.kaggle %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-instagram"></i> Instagram URL</label>
+              <input type="url" name="instagram" class="form-control" value="<%= siteData.profile.socials.instagram %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-discord"></i> Discord Linki</label>
+              <input type="url" name="discord" class="form-control" value="<%= siteData.profile.socials.discord %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi bi-telegram"></i> Telegram Linki</label>
+              <input type="url" name="telegram" class="form-control" value="<%= siteData.profile.socials.telegram %>" />
+            </div>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">📌 Ana Sayfa Öne Çıkan Bento Kartları</h4>
+          <div class="row g-3">
+            <% (siteData.profile.highlights || []).forEach((card, i) => { %>
+              <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded bg-dark">
+                  <h6 class="text-info mb-2">Kart #<%= i + 1 %></h6>
+                  <div class="mb-2">
+                    <label class="form-label">İkon (Emoji)</label>
+                    <input type="text" name="highlight_icon[]" class="form-control" value="<%= card.icon %>" />
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Rozet (Opsiyonel)</label>
+                    <input type="text" name="highlight_badge[]" class="form-control" value="<%= card.badge %>" />
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Başlık</label>
+                    <input type="text" name="highlight_title[]" class="form-control" value="<%= card.title %>" />
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="highlight_desc[]" class="form-control" rows="2"><%= card.description %></textarea>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label class="form-label">Link Metni</label>
+                      <input type="text" name="highlight_linktext[]" class="form-control" value="<%= card.linkText %>" />
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label">Link URL</label>
+                      <input type="text" name="highlight_linkurl[]" class="form-control" value="<%= card.linkUrl %>" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn-save-primary">
+              <i class="bi bi-check2-circle"></i> Değişiklikleri Kaydet
+            </button>
+          </div>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: HAKKIMDA & YETKİNLİKLER                                 -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'about') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-file-earmark-person-fill text-primary"></i> Hakkımda & Yetkinlikler Ayarları</h2>
+          <span class="text-muted small">Biyografi metinleri, hedefler ve teknoloji kategorileri</span>
+        </div>
+
+        <form method="POST" action="/admin/about">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Üst Çip / Breadcrumb</label>
+              <input type="text" name="breadcrumb" class="form-control" value="<%= siteData.about.breadcrumb %>" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Sayfa Ana Başlığı</label>
+              <input type="text" name="title" class="form-control" value="<%= siteData.about.title %>" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Sayfa Alt Başlığı</label>
+              <input type="text" name="subtitle" class="form-control" value="<%= siteData.about.subtitle %>" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Biyografi Karşılama Başlığı</label>
+              <input type="text" name="bioTitle" class="form-control" value="<%= siteData.about.bioTitle %>" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Biyografi Paragrafları (Her satır ayrı bir paragraf oluşturur - HTML etiketleri kullanılabilir)</label>
+              <textarea name="bioParagraphs" class="form-control" rows="6"><%= (siteData.about.bioParagraphs || []).join('\n\n') %></textarea>
+            </div>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">🎯 Odak Noktaları</h4>
+          <div class="row g-3">
+            <% (siteData.about.focusPoints || []).forEach((fp, i) => { %>
+              <div class="col-md-6">
+                <div class="p-3 border border-secondary rounded bg-dark">
+                  <div class="row g-2 mb-2">
+                    <div class="col-3">
+                      <label class="form-label">İkon</label>
+                      <input type="text" name="focus_icon[]" class="form-control" value="<%= fp.icon %>" />
+                    </div>
+                    <div class="col-9">
+                      <label class="form-label">Başlık</label>
+                      <input type="text" name="focus_title[]" class="form-control" value="<%= fp.title %>" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="focus_desc[]" class="form-control" rows="2"><%= fp.description %></textarea>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">🛠️ Teknoloji Yığını ve Yetenek Kategorileri</h4>
+          <div class="row g-3">
+            <% (siteData.about.skillCategories || []).forEach((cat, i) => { %>
+              <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded bg-dark">
+                  <div class="mb-2">
+                    <label class="form-label">Kategori Başlığı</label>
+                    <input type="text" name="skill_category_title[]" class="form-control" value="<%= cat.title %>" />
+                  </div>
+                  <div class="mb-2 form-check">
+                    <input type="checkbox" name="skill_category_accent[]" value="<%= i %>" class="form-check-input" id="acc_<%= i %>" <%= cat.isAccent ? 'checked' : '' %> />
+                    <label class="form-check-label text-warning small" for="acc_<%= i %>">Vurgulu Kategori (Accent)</label>
+                  </div>
+                  <div>
+                    <label class="form-label">Etiketler (Virgülle ayırın)</label>
+                    <input type="text" name="skill_category_tags[]" class="form-control" value="<%= (cat.tags || []).join(', ') %>" />
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
+          <div class="mt-4">
+            <label class="form-label">İletişim Kutusu Çağrı Metni (CTA)</label>
+            <input type="text" name="ctaText" class="form-control" value="<%= siteData.about.ctaText %>" />
+          </div>
+
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn-save-primary">
+              <i class="bi bi-check2-circle"></i> Değişiklikleri Kaydet
+            </button>
+          </div>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: PROJELERİM                                              -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'projects') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-code-square text-primary"></i> Projeler Yönetimi</h2>
+          <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+            <i class="bi bi-plus-circle me-1"></i> Yeni Proje Ekle
+          </button>
+        </div>
+
+        <div class="items-grid">
+          <% (siteData.projects || []).forEach(project => { %>
+            <div class="item-box" id="proj-card-<%= project.id %>">
+              <div>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h4 class="h5 fw-bold text-white mb-0"><%= project.name %></h4>
+                  <% if (project.featuredBadge) { %>
+                    <span class="badge bg-warning text-dark"><%= project.featuredBadge %></span>
+                  <% } %>
+                </div>
+                <p class="text-info small mb-2"><%= project.tagline %></p>
+                <p class="text-muted small mb-3" style="max-height: 80px; overflow-y: auto;"><%= project.problemSolution %></p>
+
+                <div class="mb-3">
+                  <strong class="d-block text-secondary small mb-1">Teknoloji:</strong>
+                  <div class="d-flex flex-wrap gap-1">
+                    <% (project.techStack || []).forEach(t => { %>
+                      <span class="badge bg-secondary"><%= t %></span>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-top border-secondary d-flex justify-content-between align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                  onclick="openEditProject(<%= JSON.stringify(project) %>)"
+                >
+                  <i class="bi bi-pencil-square"></i> Düzenle
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  onclick="deleteProjectItem('<%= project.id %>')"
+                >
+                  <i class="bi bi-trash3-fill"></i> Sil
+                </button>
               </div>
             </div>
           <% }); %>
         </div>
-      <% } %>
-    </div>
-  </div>
+      </div>
 
+      <!-- PROJE EKLEME MODALI -->
+      <div class="modal fade" id="addProjectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content bg-dark text-white border-secondary">
+            <form method="POST" action="/admin/projects/add">
+              <div class="modal-header border-secondary">
+                <h5 class="modal-title"><i class="bi bi-plus-circle text-success me-2"></i>Yeni Proje Ekle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Proje Adı</label>
+                  <input type="text" name="name" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Öne Çıkan Rozet (Örn: 🏆 TEKNOFEST 2024)</label>
+                  <input type="text" name="featuredBadge" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Slogan / Kısa Tanım</label>
+                  <input type="text" name="tagline" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Etiketler (Virgülle ayırın - Örn: Yapay Zeka, NLP, Mobil)</label>
+                  <input type="text" name="tags" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Problem & Çözüm Özeti</label>
+                  <textarea name="problemSolution" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Rolünüz (Örn: Proje Kaptanı)</label>
+                  <input type="text" name="role" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Rol Açıklaması</label>
+                  <input type="text" name="roleDescription" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Teknoloji Yığını (Virgülle ayırın: Python, SQL, Git)</label>
+                  <input type="text" name="techStack" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">GitHub URL</label>
+                  <input type="url" name="githubUrl" class="form-control" placeholder="https://github.com/..." />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Canlı Demo / Web Linki</label>
+                  <input type="url" name="liveUrl" class="form-control" placeholder="https://..." />
+                </div>
+              </div>
+              <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-success fw-bold">Projeyi Kaydet</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJE DÜZENLEME MODALI -->
+      <div class="modal fade" id="editProjectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content bg-dark text-white border-secondary">
+            <form method="POST" id="editProjectForm" action="">
+              <div class="modal-header border-secondary">
+                <h5 class="modal-title"><i class="bi bi-pencil-square text-info me-2"></i>Projeyi Düzenle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Proje Adı</label>
+                  <input type="text" name="name" id="edit_p_name" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Öne Çıkan Rozet</label>
+                  <input type="text" name="featuredBadge" id="edit_p_badge" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Slogan / Kısa Tanım</label>
+                  <input type="text" name="tagline" id="edit_p_tagline" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Etiketler (Virgülle ayırın)</label>
+                  <input type="text" name="tags" id="edit_p_tags" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Problem & Çözüm Özeti</label>
+                  <textarea name="problemSolution" id="edit_p_summary" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Rolünüz</label>
+                  <input type="text" name="role" id="edit_p_role" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Rol Açıklaması</label>
+                  <input type="text" name="roleDescription" id="edit_p_roledesc" class="form-control" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Teknoloji Yığını (Virgülle ayırın)</label>
+                  <input type="text" name="techStack" id="edit_p_tech" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">GitHub URL</label>
+                  <input type="url" name="githubUrl" id="edit_p_github" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Canlı Demo URL</label>
+                  <input type="url" name="liveUrl" id="edit_p_live" class="form-control" />
+                </div>
+              </div>
+              <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-primary fw-bold">Güncellemeleri Kaydet</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: SERTİFİKALARIM                                          -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'certificates') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-patch-check-fill text-primary"></i> Sertifikalar Yönetimi</h2>
+          <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addCertModal">
+            <i class="bi bi-plus-circle me-1"></i> Yeni Sertifika Ekle
+          </button>
+        </div>
+
+        <div class="items-grid">
+          <% (siteData.certificates || []).forEach(cert => { %>
+            <div class="item-box" id="cert-card-<%= cert.id %>">
+              <div>
+                <div style="height: 140px; overflow: hidden; border-radius: 8px; margin-bottom: 12px; background: #0b1120;">
+                  <img src="<%= cert.imageUrl %>" alt="<%= cert.title %>" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <span class="badge bg-info text-dark mb-2"><%= cert.issuer || 'Akreditasyon' %></span>
+                <h5 class="fw-bold text-white mb-2"><%= cert.title %></h5>
+                <p class="text-muted small mb-3" style="max-height: 70px; overflow-y: auto;"><%= cert.description %></p>
+              </div>
+
+              <div class="pt-3 border-top border-secondary d-flex justify-content-between align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                  onclick="openEditCert(<%= JSON.stringify(cert) %>)"
+                >
+                  <i class="bi bi-pencil-square"></i> Düzenle
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  onclick="deleteCertItem('<%= cert.id %>')"
+                >
+                  <i class="bi bi-trash3-fill"></i> Sil
+                </button>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- SERTİFİKA EKLEME MODALI -->
+      <div class="modal fade" id="addCertModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content bg-dark text-white border-secondary">
+            <form method="POST" action="/admin/certificates/add">
+              <div class="modal-header border-secondary">
+                <h5 class="modal-title"><i class="bi bi-plus-circle text-success me-2"></i>Yeni Sertifika Ekle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body row g-3">
+                <div class="col-12">
+                  <label class="form-label">Sertifika Başlığı</label>
+                  <input type="text" name="title" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Veren Kurum (Örn: IBM SkillsBuild)</label>
+                  <input type="text" name="issuer" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Açıklama</label>
+                  <textarea name="description" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Görsel URL / Yolu</label>
+                  <input type="text" name="imageUrl" class="form-control" placeholder="/Pictures/sertifika1.jpg veya /uploads/..." required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Doğrulama / Credly Linki</label>
+                  <input type="url" name="verifyUrl" class="form-control" placeholder="https://www.credly.com/..." />
+                </div>
+              </div>
+              <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-success fw-bold">Sertifikayı Kaydet</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERTİFİKA DÜZENLEME MODALI -->
+      <div class="modal fade" id="editCertModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content bg-dark text-white border-secondary">
+            <form method="POST" id="editCertForm" action="">
+              <div class="modal-header border-secondary">
+                <h5 class="modal-title"><i class="bi bi-pencil-square text-info me-2"></i>Sertifikayı Düzenle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body row g-3">
+                <div class="col-12">
+                  <label class="form-label">Sertifika Başlığı</label>
+                  <input type="text" name="title" id="edit_c_title" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Veren Kurum</label>
+                  <input type="text" name="issuer" id="edit_c_issuer" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Açıklama</label>
+                  <textarea name="description" id="edit_c_desc" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Görsel URL / Yolu</label>
+                  <input type="text" name="imageUrl" id="edit_c_image" class="form-control" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Doğrulama Linki</label>
+                  <input type="url" name="verifyUrl" id="edit_c_verify" class="form-control" />
+                </div>
+              </div>
+              <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-primary fw-bold">Güncellemeleri Kaydet</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 6: LİDERLİK & A.T.A.K.                                     -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'leadership') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-mortarboard-fill text-primary"></i> Liderlik & A.T.A.K. Kulübü Ayarları</h2>
+          <span class="text-muted small">Topluluk bilgileri, istatistik kartları ve vizyon sütunları</span>
+        </div>
+
+        <form method="POST" action="/admin/leadership">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Kulüp Adı</label>
+              <input type="text" name="clubName" class="form-control" value="<%= siteData.leadership.clubName %>" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Göreviniz / Rol Başlığı</label>
+              <input type="text" name="roleTitle" class="form-control" value="<%= siteData.leadership.roleTitle %>" required />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Alt Başlık (Slogan)</label>
+              <input type="text" name="subtitle" class="form-control" value="<%= siteData.leadership.subtitle %>" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-instagram"></i> Kulüp Instagram URL</label>
+              <input type="url" name="instagramUrl" class="form-control" value="<%= siteData.leadership.instagramUrl %>" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-linkedin"></i> Kulüp LinkedIn URL</label>
+              <input type="url" name="linkedinUrl" class="form-control" value="<%= siteData.leadership.linkedinUrl %>" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Kulüp Açıklama Paragrafları (Her satır ayrı bir paragraf oluşturur - HTML destekler)</label>
+              <textarea name="descriptionParagraphs" class="form-control" rows="5"><%= (siteData.leadership.descriptionParagraphs || []).join('\n\n') %></textarea>
+            </div>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">📊 İstatistik Kartları</h4>
+          <div class="row g-3">
+            <% (siteData.leadership.stats || []).forEach((stat, i) => { %>
+              <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded bg-dark">
+                  <div class="row g-2 mb-2">
+                    <div class="col-3">
+                      <label class="form-label">İkon</label>
+                      <input type="text" name="stat_icon[]" class="form-control" value="<%= stat.icon %>" />
+                    </div>
+                    <div class="col-9">
+                      <label class="form-label">Sayı / Değer</label>
+                      <input type="text" name="stat_number[]" class="form-control" value="<%= stat.number %>" />
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Başlık</label>
+                    <input type="text" name="stat_title[]" class="form-control" value="<%= stat.title %>" />
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="stat_desc[]" class="form-control" rows="2"><%= stat.description %></textarea>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="stat_highlight[]" value="<%= i %>" class="form-check-input" id="st_<%= i %>" <%= stat.isHighlighted ? 'checked' : '' %> />
+                    <label class="form-check-label text-warning small" for="st_<%= i %>">Öne Çıkarılan Kart (Highlight)</label>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
+          <h4 class="mt-4 mb-3 border-bottom border-secondary pb-2">🏛️ Temel İlkeler ve Sütunlar</h4>
+          <div class="row g-3">
+            <% (siteData.leadership.pillars || []).forEach((pillar, i) => { %>
+              <div class="col-md-6">
+                <div class="p-3 border border-secondary rounded bg-dark">
+                  <div class="mb-2">
+                    <label class="form-label">Sütun Başlığı</label>
+                    <input type="text" name="pillar_title[]" class="form-control" value="<%= pillar.title %>" />
+                  </div>
+                  <div>
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="pillar_desc[]" class="form-control" rows="3"><%= pillar.description %></textarea>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn-save-primary">
+              <i class="bi bi-check2-circle"></i> Değişiklikleri Kaydet
+            </button>
+          </div>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- TAB 7: MEDYA & DOSYALAR                                        -->
+    <!-- ============================================================== -->
+    <% if (activeTab === 'media') { %>
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2><i class="bi bi-images text-primary"></i> Medya & Dosya Yükleyici</h2>
+          <span class="text-muted small">Projeleriniz, sertifikalarınız veya profiliniz için görsel yükleyin</span>
+        </div>
+
+        <div class="row g-4">
+          <!-- Sol: Yükleme Kutusu -->
+          <div class="col-lg-4">
+            <div class="p-4 border border-secondary rounded bg-dark">
+              <h5 class="fw-bold mb-3"><i class="bi bi-cloud-arrow-up text-accent"></i> Yeni Görsel Yükle</h5>
+              <form method="POST" action="/admin/upload" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label class="form-label">Görsel Dosyası Seç</label>
+                  <input type="file" name="image" class="form-control" accept="image/*" required />
+                  <div class="form-text">PNG, JPG, JPEG, WEBP formatları (Max: 10MB)</div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fw-bold">
+                  <i class="bi bi-upload me-1"></i> Sunucuya Yükle
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Sağ: Yüklenen Görseller -->
+          <div class="col-lg-8">
+            <h5 class="fw-bold mb-3"><i class="bi bi-collection"></i> Yüklenmiş Görseller (<%= uploadedFiles.length %>)</h5>
+            <% if (uploadedFiles.length === 0) { %>
+              <div class="text-muted p-4 border border-secondary rounded text-center">
+                Henüz yüklenmiş medya dosyası yok.
+              </div>
+            <% } else { %>
+              <div class="row g-3">
+                <% uploadedFiles.forEach(fileUrl => { %>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="media-card">
+                      <img src="<%= fileUrl %>" class="media-thumb" alt="media" />
+                      <div class="media-info bg-dark">
+                        <span class="text-truncate me-2 small text-muted"><%= fileUrl.split('/').pop() %></span>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info"
+                          onclick="copyToClipboard('<%= fileUrl %>')"
+                          title="URL'yi Kopyala"
+                        >
+                          <i class="bi bi-copy"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function openEmail(email, name) {
-      const subject = encodeURIComponent(`Re: ${name}`);
-      window.location.href = `mailto:${email}?subject=${subject}`;
-    }
-
-    function deleteMessage(id) {
-      if (confirm('Bu mesajı silmek istediğinize emin misiniz?')) {
-        fetch(`/admin/messages/${id}`, {
-          method: 'DELETE',
-        })
+    // Mesaj Silme
+    function deleteMsg(id) {
+      if (!confirm('Bu mesajı kalıcı olarak silmek istediğinize emin misiniz?')) return;
+      fetch(`/admin/messages/${id}`, { method: 'DELETE' })
         .then(res => res.json())
         .then(data => {
           if (data.ok) {
-            const card = document.querySelector(`[data-id="${id}"]`);
-            card.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => card.remove(), 300);
-            
-            // Sayfayı yenile
-            setTimeout(() => location.reload(), 500);
+            const card = document.getElementById(`msg-card-${id}`);
+            if (card) {
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.9)';
+              setTimeout(() => card.remove(), 300);
+            }
           } else {
-            alert('Mesaj silinemedi');
+            alert('Hata: ' + (data.error || 'Silinemedi'));
           }
         })
-        .catch(err => console.error(err));
-      }
+        .catch(err => alert('Ağ hatası oluştu'));
+    }
+
+    // Proje Silme
+    function deleteProjectItem(id) {
+      if (!confirm('Bu projeyi kalıcı olarak silmek istediğinize emin misiniz?')) return;
+      fetch(`/admin/projects/${id}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.ok) {
+            const card = document.getElementById(`proj-card-${id}`);
+            if (card) card.remove();
+          } else {
+            alert('Hata: ' + (data.error || 'Silinemedi'));
+          }
+        })
+        .catch(err => alert('Ağ hatası oluştu'));
+    }
+
+    // Proje Düzenleme Modalını Doldur
+    function openEditProject(project) {
+      document.getElementById('editProjectForm').action = `/admin/projects/edit/${project.id}`;
+      document.getElementById('edit_p_name').value = project.name || '';
+      document.getElementById('edit_p_badge').value = project.featuredBadge || '';
+      document.getElementById('edit_p_tagline').value = project.tagline || '';
+      document.getElementById('edit_p_tags').value = (project.tags || []).join(', ');
+      document.getElementById('edit_p_summary').value = project.problemSolution || '';
+      document.getElementById('edit_p_role').value = project.role || '';
+      document.getElementById('edit_p_roledesc').value = project.roleDescription || '';
+      document.getElementById('edit_p_tech').value = (project.techStack || []).join(', ');
+      document.getElementById('edit_p_github').value = project.githubUrl || '';
+      document.getElementById('edit_p_live').value = project.liveUrl || '';
+
+      const modal = new bootstrap.Modal(document.getElementById('editProjectModal'));
+      modal.show();
+    }
+
+    // Sertifika Silme
+    function deleteCertItem(id) {
+      if (!confirm('Bu sertifikayı silmek istediğinize emin misiniz?')) return;
+      fetch(`/admin/certificates/${id}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.ok) {
+            const card = document.getElementById(`cert-card-${id}`);
+            if (card) card.remove();
+          } else {
+            alert('Hata: ' + (data.error || 'Silinemedi'));
+          }
+        })
+        .catch(err => alert('Ağ hatası oluştu'));
+    }
+
+    // Sertifika Düzenleme Modalını Doldur
+    function openEditCert(cert) {
+      document.getElementById('editCertForm').action = `/admin/certificates/edit/${cert.id}`;
+      document.getElementById('edit_c_title').value = cert.title || '';
+      document.getElementById('edit_c_issuer').value = cert.issuer || '';
+      document.getElementById('edit_c_desc').value = cert.description || '';
+      document.getElementById('edit_c_image').value = cert.imageUrl || '';
+      document.getElementById('edit_c_verify').value = cert.verifyUrl || '';
+
+      const modal = new bootstrap.Modal(document.getElementById('editCertModal'));
+      modal.show();
+    }
+
+    // URL Kopyalama
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Kopyalandı: ' + text);
+      }).catch(err => {
+        prompt('Bağlantıyı kopyalayın:', text);
+      });
     }
   </script>
-
-  <style>
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-    }
-  </style>
 </body>
 </html>
